@@ -31,7 +31,7 @@ python3 skills/rabbit-plugin-audit/scripts/scaffold_plugin.py --self-test
 One home per fact. Each skill under `skills/<name>/` is completely self-contained per Anthropic's progressive disclosure specification:
 
 - **`.claude-plugin/`**:
-  - `plugin.json`: Plugin manifest for `rabbit-skills` (v1.0.0). Keeps always-on token cost under 150 tokens (`PL-12`).
+  - `plugin.json`: Plugin manifest for `rabbit-skills` (v1.1.0). Keeps always-on token cost under 150 tokens (`PL-12`).
   - `marketplace.json`: Marketplace catalog indexing `rabbit-skills` and pointing to `whit3rabbit/rabbit-writes`.
 - **`skills/rabbit-skills-audit/`**: Agent skill authoring, static auditing, and 31-harness deployment.
   - `SKILL.md`: Main progressive disclosure workflow (<500 lines).

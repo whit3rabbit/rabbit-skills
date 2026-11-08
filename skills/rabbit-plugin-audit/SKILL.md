@@ -1,5 +1,6 @@
 ---
 name: rabbit-plugin-audit
+version: 1.1.0
 description: Scaffold, audit, lint, and validate Claude Code, Codex, and DeepSeek Harness (DSH) plugins and marketplaces. Use when packaging, linting, or releasing plugins.
 ---
 
