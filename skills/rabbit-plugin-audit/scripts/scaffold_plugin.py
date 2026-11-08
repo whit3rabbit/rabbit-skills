@@ -37,6 +37,13 @@ SUPPORTED_HARNESSES = {
         "mcp_path": "mcp.json",
         "description": "Portable Agent Plugin with OpenAI extensions, onboarding skill, and MCP"
     },
+    "dsh": {
+        "name": "DeepSeek Harness (Cordis)",
+        "doc": "references/deepseek-harness-plugins.md",
+        "manifest_path": "package.json",
+        "mcp_path": "cordis.patch.yml",
+        "description": "DeepSeek Harness plugin bundle with Cordis patch, tools, and events"
+    },
     "generic": {
         "name": "Portable Agent Plugins Standard",
         "doc": "references/claude-plugins.md",
@@ -386,6 +393,132 @@ Built following the portable Agent Plugins specification (`agent-plugins.org`).
     write_file_safe(dest / "README.md", readme_content)
 
 
+def scaffold_dsh_plugin(dest: Path, plugin_name: str, title: str, desc: str):
+    """Scaffold a DeepSeek Harness (DSH) compliant plugin bundle."""
+    dest.mkdir(parents=True, exist_ok=True)
+    pkg_name = f"dsh-{plugin_name}"
+    tool_fn_name = plugin_name.replace("-", "_")
+
+    # 1. package.json
+    manifest = {
+        "name": pkg_name,
+        "version": "1.0.0",
+        "description": desc,
+        "license": "MIT",
+        "type": "module",
+        "main": "src/index.ts",
+        "scripts": {
+            "build": "tsc -b"
+        },
+        "files": [
+            "dist",
+            "cordis.patch.yml"
+        ],
+        "dsh": {
+            "bundle": {
+                "patch": "./cordis.patch.yml"
+            }
+        },
+        "peerDependencies": {
+            "@deepseek-ai/cordis": "^1.0.0",
+            "@deepseek-ai/dsh-tools": "^1.0.0"
+        }
+    }
+    write_json_safe(dest / "package.json", manifest)
+
+    # 2. cordis.patch.yml
+    patch_content = f"""- insert:
+    - id: {plugin_name}
+      name: {pkg_name}
+      disabled: false
+      config:
+        enabled: true
+"""
+    write_file_safe(dest / "cordis.patch.yml", patch_content)
+
+    # 3. src/index.ts
+    index_content = f"""import type {{ Context }} from '@deepseek-ai/cordis'
+import {{ defineTool }} from '@deepseek-ai/dsh-tools'
+
+export const name = '{pkg_name}'
+export const inject = ['tools']
+
+export interface Config {{
+  enabled?: boolean
+}}
+
+export function apply(ctx: Context, config: Config = {{}}) {{
+  ctx.logger.info(`[{pkg_name}] Initializing plugin`)
+
+  // Register custom agent tool
+  ctx.tools.register(
+    defineTool({{
+      name: '{tool_fn_name}',
+      description: '{desc}',
+      parameters: {{
+        query: {{
+          type: 'string',
+          required: true,
+          description: 'Input query or operation parameter',
+        }},
+      }},
+      output: {{
+        schema: {{ type: 'string' }},
+        render: (_args, value) => [{{ type: 'text', text: value }}],
+      }},
+      async execute(args) {{
+        return `Result for ${{args.query}} from {tool_fn_name}`
+      }},
+    }})
+  )
+
+  // Listen to lifecycle event
+  ctx.on('tools/result', (event: any) => {{
+    ctx.logger.info(`[{pkg_name}] Tool execution completed: ${{event.name}}`)
+  }})
+}}
+"""
+    write_file_safe(dest / "src" / "index.ts", index_content)
+
+    # 4. agent.cordis.yml (Preset template)
+    preset_content = f"""name: {plugin_name}-expert
+description: Dedicated agent preset for {title} workflows
+persona:
+  role: Senior {title} Specialist
+  tone: Direct, accurate, and concise
+  instructions: |
+    - Analyze problems methodically before taking action.
+    - Validate inputs and report structured outcomes.
+tools:
+  - {tool_fn_name}
+"""
+    write_file_safe(dest / "agent.cordis.yml", preset_content)
+
+    # 5. README.md
+    readme_content = f"""# {title} (DeepSeek Harness Plugin)
+
+{desc}
+
+## DeepSeek Harness Installation
+
+```bash
+# Add local development plugin to active profile:
+dsh plugin --profile web add link:"$(pwd)"
+
+# Verify active plugins:
+dsh plugin --profile web ls
+```
+
+## Architecture
+
+- **Cordis Container:** Configured via `cordis.patch.yml`
+- **Tooling:** Implements `{tool_fn_name}` using `@deepseek-ai/dsh-tools`
+- **Events:** Subscribes to `tools/result` with automatic lifecycle teardown
+- **Preset:** Optional agent preset available in `agent.cordis.yml`
+"""
+    write_file_safe(dest / "README.md", readme_content)
+
+
 def run_self_test():
     """Verify scaffolding functionality for claude, codex, and generic targets."""
     print("Running scaffold_plugin.py self-test...")
@@ -421,14 +554,26 @@ def run_self_test():
         assert (generic_dir / "mcp.json").is_file(), "Generic mcp.json missing"
         print("  ✓ Generic scaffolding test passed")
 
-    print("All scaffold_plugin.py self-tests PASSED (3/3).")
+        # Test DeepSeek Harness (DSH)
+        dsh_dir = root / "test-dsh"
+        scaffold_dsh_plugin(dsh_dir, "test-dsh", "Test DSH", "DSH test desc")
+        assert (dsh_dir / "package.json").is_file(), "DSH package.json missing"
+        assert (dsh_dir / "cordis.patch.yml").is_file(), "DSH cordis.patch.yml missing"
+        assert (dsh_dir / "src" / "index.ts").is_file(), "DSH src/index.ts missing"
+        assert (dsh_dir / "agent.cordis.yml").is_file(), "DSH agent.cordis.yml missing"
+        with open(dsh_dir / "package.json") as f:
+            dsh_manifest = json.load(f)
+        assert "dsh" in dsh_manifest and "bundle" in dsh_manifest["dsh"], "DSH bundle config missing"
+        print("  ✓ DeepSeek Harness (DSH) scaffolding test passed")
+
+    print("All scaffold_plugin.py self-tests PASSED (4/4).")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Plugin Scaffolder for Claude Code, Codex, and Generic Standards.")
     parser.add_argument("name", nargs="?", help="Plugin name (lowercase kebab-case)")
-    parser.add_argument("--harness", choices=("claude", "codex", "generic"), default="claude",
-                        help="Target harness layout (claude, codex, or generic)")
+    parser.add_argument("--harness", choices=("claude", "codex", "dsh", "generic"), default="claude",
+                        help="Target harness layout (claude, codex, dsh, or generic)")
     parser.add_argument("--dest", help="Destination folder (defaults to current dir / <name>)")
     parser.add_argument("--title", help="Human-readable title")
     parser.add_argument("--desc", help="Short summary description")
@@ -466,6 +611,8 @@ def main():
         scaffold_claude_plugin(dest, plugin_name, title, desc, args.with_mcp, args.with_evals)
     elif args.harness == "codex":
         scaffold_codex_plugin(dest, plugin_name, title, desc, args.with_mcp)
+    elif args.harness == "dsh":
+        scaffold_dsh_plugin(dest, plugin_name, title, desc)
     elif args.harness == "generic":
         scaffold_generic_plugin(dest, plugin_name, title, desc, args.with_mcp)
 

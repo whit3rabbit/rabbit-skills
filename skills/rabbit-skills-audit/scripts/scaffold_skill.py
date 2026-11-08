@@ -78,6 +78,18 @@ HARNESS_MATRIX = {
         "global": "~/.cursor/skills/{name}",
         "doc": "references/harnesses/cursor.md",
     },
+    "deepseek-harness": {
+        "name": "DeepSeek Harness (DSH)",
+        "project": ".dsh/skills/{name}",
+        "global": "~/.dsh/skills/{name}",
+        "doc": "references/harnesses/dsh.md",
+    },
+    "dsh": {
+        "name": "DeepSeek Harness (DSH)",
+        "project": ".dsh/skills/{name}",
+        "global": "~/.dsh/skills/{name}",
+        "doc": "references/harnesses/dsh.md",
+    },
     "droid": {
         "name": "Factory AI Droid",
         "project": ".agents/skills/{name}",

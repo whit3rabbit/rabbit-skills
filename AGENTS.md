@@ -1,6 +1,6 @@
 # rabbit-skills
 
-Claude Code and Codex plugin studio and marketplace for agent skills across 30 harnesses, and plugin/marketplace validation.
+Claude Code, Codex, and DeepSeek Harness (DSH) plugin studio and marketplace for agent skills across 31 harnesses, and plugin/marketplace validation.
 
 Repository: https://github.com/whit3rabbit/rabbit-skills
 
@@ -19,8 +19,10 @@ python3 skills/rabbit-plugin-audit/scripts/audit_plugin.py . --strict
 # All built-in self-tests:
 python3 skills/rabbit-skills-audit/scripts/frontmatter.py --self-test
 python3 skills/rabbit-skills-audit/scripts/audit_static.py --self-test
+python3 skills/rabbit-skills-audit/scripts/audit_dsh_skill.py --self-test
 python3 skills/rabbit-skills-audit/scripts/scaffold_skill.py --self-test
 python3 skills/rabbit-plugin-audit/scripts/audit_plugin.py --self-test
+python3 skills/rabbit-plugin-audit/scripts/audit_dsh.py --self-test
 python3 skills/rabbit-plugin-audit/scripts/scaffold_plugin.py --self-test
 ```
 
@@ -31,23 +33,26 @@ One home per fact. Each skill under `skills/<name>/` is completely self-containe
 - **`.claude-plugin/`**:
   - `plugin.json`: Plugin manifest for `rabbit-skills` (v1.0.0). Keeps always-on token cost under 150 tokens (`PL-12`).
   - `marketplace.json`: Marketplace catalog indexing `rabbit-skills` and pointing to `whit3rabbit/rabbit-writes`.
-- **`skills/rabbit-skills-audit/`**: Agent skill authoring, static auditing, and 30-harness deployment.
+- **`skills/rabbit-skills-audit/`**: Agent skill authoring, static auditing, and 31-harness deployment.
   - `SKILL.md`: Main progressive disclosure workflow (<500 lines).
   - `scripts/audit_static.py`: Read-only deterministic static linter (45 checks across `MD`, `ST`, `CQ`, `WF`, `SC`, `EV`).
-  - `scripts/scaffold_skill.py`: "Born-Clean" skill scaffolder and placement engine for 30 harnesses.
+  - `scripts/audit_dsh_skill.py`: Dedicated static linter for DeepSeek Harness (DSH) skills (DSK-01..DSK-12).
+  - `scripts/scaffold_skill.py`: "Born-Clean" skill scaffolder and placement engine for 31 harnesses.
   - `scripts/frontmatter.py`: Zero-dependency YAML frontmatter parser fallback.
   - `references/audit-checks.md`: Full catalog of 45 checks with Good/Bad examples.
   - `references/pre-share-checklist.md`: Official Anthropic 22-item pre-share checklist mapped to check IDs.
   - `references/report-template.md`: Verdict criteria and markdown report template.
-  - `references/harnesses/`: 30 markdown guides detailing paths and precedence for all supported agent harnesses.
+  - `references/harnesses/`: 31 markdown guides detailing paths and precedence for all supported agent harnesses (including DeepSeek Harness `dsh.md`).
   - `evals/`: 5 evaluation scenarios and test fixture (`fixtures/bad-skill/`) used by `--self-test`.
 - **`skills/rabbit-plugin-audit/`**: Plugin and marketplace manifest linter and scaffolder.
   - `SKILL.md`: Plugin and marketplace workflow instructions.
   - `scripts/audit_plugin.py`: Static linter for Claude Code and Codex plugins/catalogs (PL-01..PL-18, MP-01..MP-15).
-  - `scripts/scaffold_plugin.py`: Scaffolder for plugin manifests, lifecycle hooks, MCP configurations, and catalogs.
+  - `scripts/audit_dsh.py`: Dedicated static linter for DeepSeek Harness (Cordis) plugins, tools, and presets (DSH-01..DSH-12).
+  - `scripts/scaffold_plugin.py`: Scaffolder for plugin manifests, lifecycle hooks, MCP configurations, Cordis bundles, and catalogs.
   - `references/claude-plugins.md`: Complete guide to Claude Code plugins, components, evals, and cost profiling.
   - `references/codex-plugins.md`: Complete guide to OpenAI Codex & ChatGPT portable plugins.
-  - `references/plugin-marketplace-linting.md`: Check specifications for plugins and marketplaces.
+  - `references/deepseek-harness-plugins.md`: Complete guide to DeepSeek Harness plugins, Cordis patches, tools, and events.
+  - `references/plugin-marketplace-linting.md`: Check specifications for plugins, marketplaces, and DeepSeek Harness bundles.
 
 ## Invariants & Rules for Agents
 

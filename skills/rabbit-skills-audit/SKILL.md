@@ -1,6 +1,6 @@
 ---
 name: rabbit-skills-audit
-description: Scaffold, audit, lint, and deploy agent skills against Anthropic's 45 best practices across 30 harnesses (Claude Code, Cursor, Antigravity). Use when creating, auditing, linting, scoring, or placing skills across harnesses.
+description: Scaffold, audit, lint, and deploy agent skills against Anthropic's 45 best practices across 31 harnesses (Claude Code, DeepSeek Harness, Cursor, Antigravity). Use when creating, auditing, linting, scoring, or placing skills across harnesses.
 ---
 
 # Auditing and Improving Agent Skills
@@ -131,7 +131,8 @@ Useful flags: `--checklist` (adds the 22-item checklist to text output), `--area
 - [`evals/README.md`](evals/README.md): evaluation suite guide and test runner instructions
 - [`evals/evals.json`](evals/evals.json): 5 evaluation scenarios and cross-model results log
 - [`scripts/audit_static.py`](scripts/audit_static.py): modular static linter + checklist evaluator (`--self-test` supported)
-- [`scripts/scaffold_skill.py`](scripts/scaffold_skill.py): compliant skill scaffolder and 30-harness placement manager (`--self-test` supported)
+- [`scripts/scaffold_skill.py`](scripts/scaffold_skill.py): compliant skill scaffolder and 31-harness placement manager (`--self-test` supported)
+- [`scripts/audit_dsh_skill.py`](scripts/audit_dsh_skill.py): dedicated static linter for DeepSeek Harness (DSH) skills (`--self-test` supported)
 - [`scripts/frontmatter.py`](scripts/frontmatter.py): stdlib YAML frontmatter parser (`--self-test` supported)
 
 ### Harness references
@@ -146,6 +147,7 @@ Harness-specific skill layouts, project vs. user paths, settings locations, and 
 - [`references/harnesses/command-code.md`](references/harnesses/command-code.md): Command Code terminal agent skills layout and precedence
 - [`references/harnesses/crush.md`](references/harnesses/crush.md): Charmbracelet Crush terminal agent skills layout and TUI configuration
 - [`references/harnesses/cursor.md`](references/harnesses/cursor.md): Cursor editor skills layout, project vs. global paths, and rules
+- [`references/harnesses/dsh.md`](references/harnesses/dsh.md): DeepSeek Harness (DSH) skills layout, progressive disclosure, and precedence
 - [`references/harnesses/droid.md`](references/harnesses/droid.md): Factory AI / Droid CLI skills layout and resolution hierarchy
 - [`references/harnesses/firebender.md`](references/harnesses/firebender.md): Firebender multi-agent skills layout and workspace scopes
 - [`references/harnesses/gemini-cli.md`](references/harnesses/gemini-cli.md): Gemini CLI skills layout, project vs. global paths, and configuration

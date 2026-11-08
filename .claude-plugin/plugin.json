@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "rabbit-skills",
-  "description": "Scaffold, audit, and place agent skills across 30 harnesses; validate Claude Code and Codex plugins.",
+  "description": "Scaffold, audit, and place agent skills across 31 harnesses; validate Claude Code, Codex, and DSH plugins.",
   "version": "1.0.0",
   "author": {
     "name": "whit3rabbit",

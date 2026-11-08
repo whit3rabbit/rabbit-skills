@@ -10,7 +10,7 @@
     {
       "name": "rabbit-skills",
       "source": "./",
-      "description": "Agent skills & plugins engineering studio. Ships two skills: rabbit-skills-audit (scaffold, audit against Anthropic 45-point best practices, and deploy across 30 harnesses) and rabbit-plugin-audit (scaffold, lint, and validate Claude Code and Codex plugins, hooks, MCP configs, and marketplace catalogs).",
+      "description": "Agent skills & plugins engineering studio. Ships two skills: rabbit-skills-audit (scaffold, audit against Anthropic 45-point best practices, and deploy across 31 harnesses) and rabbit-plugin-audit (scaffold, lint, and validate Claude Code, Codex, and DSH plugins, hooks, MCP configs, and marketplace catalogs).",
       "category": "development",
       "license": "MIT",
       "author": {

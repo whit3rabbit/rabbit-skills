@@ -1,13 +1,13 @@
 # rabbit-skills
 
-Author, scaffold, audit, and deploy agent skills across 30 harnesses, and validate Claude Code and Codex plugins. Zero dependencies: everything runs on the Python 3 standard library.
+Author, scaffold, audit, and deploy agent skills across 31 harnesses, and validate Claude Code, Codex, and DeepSeek Harness (DSH) plugins. Zero dependencies: everything runs on the Python 3 standard library.
 
 ## Skills
 
 | Skill | What it does |
 |---|---|
-| [rabbit-skills-audit](skills/rabbit-skills-audit/) | Author, scaffold, and lint `SKILL.md` agent skills. 45 checks across metadata, structure, content, workflows, scripts, and evals, plus the official 22-item pre-share checklist and a placement engine for 30 harnesses. |
-| [rabbit-plugin-audit](skills/rabbit-plugin-audit/) | Scaffold and lint Claude Code / Codex plugins and marketplace catalogs. 33 checks across `plugin.json`, lifecycle hooks, MCP configs, and `marketplace.json`. |
+| [rabbit-skills-audit](skills/rabbit-skills-audit/) | Author, scaffold, and lint `SKILL.md` agent skills. 45 checks across metadata, structure, content, workflows, scripts, and evals, plus the official 22-item pre-share checklist and a placement engine for 31 harnesses. |
+| [rabbit-plugin-audit](skills/rabbit-plugin-audit/) | Scaffold and lint Claude Code, Codex, and DeepSeek Harness plugins and marketplace catalogs. Checks across `plugin.json`, lifecycle hooks, MCP configs, Cordis patches, tools, and `marketplace.json`. |
 
 Each skill is self-contained (`SKILL.md` workflow, `scripts/`, `references/`), so you can copy its directory into any harness as-is.
 
@@ -59,20 +59,27 @@ Copy into `~/.agents/skills/` instead for all-user scope. OpenCode can also regi
 { "skills": ["/path/to/rabbit-skills/skills"] }
 ```
 
+**DeepSeek Harness (DSH):** copy or link skills into `.dsh/skills/` (project) or `~/.dsh/skills/` (global):
+
+```bash
+mkdir -p .dsh/skills
+cp -r rabbit-skills/skills/rabbit-skills-audit rabbit-skills/skills/rabbit-plugin-audit .dsh/skills/
+```
+
 **Any other harness or CI:** clone and run the scripts directly. Python 3 standard library is all you need:
 
 ```bash
 git clone https://github.com/whit3rabbit/rabbit-skills.git
 ```
 
-**Deploy one skill into any of the 30 supported harnesses** (Claude Code, Cursor, Antigravity, Hermes, ...):
+**Deploy one skill into any of the 31 supported harnesses** (Claude Code, DeepSeek Harness, Cursor, Antigravity, Hermes, ...):
 
 ```bash
 python3 skills/rabbit-skills-audit/scripts/scaffold_skill.py rabbit-skills-audit \
-  --harness claude-code,cursor --scope project
+  --harness claude-code,cursor,dsh --scope project
 ```
 
-Per-harness paths for all 29: [`references/harnesses/`](skills/rabbit-skills-audit/references/harnesses/).
+Per-harness paths for all 31: [`references/harnesses/`](skills/rabbit-skills-audit/references/harnesses/).
 
 ## Use
 

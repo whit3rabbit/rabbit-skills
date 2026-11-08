@@ -7,6 +7,7 @@ A comprehensive static analysis and linting standard for Claude Code plugins, Op
 - [Overview and Linting Architecture](#overview-and-linting-architecture)
 - [Plugin Linter Check Catalog (`PL-01` through `PL-18`)](#plugin-linter-check-catalog-pl-01-through-pl-18)
 - [Marketplace Linter Check Catalog (`MP-01` through `MP-15`)](#marketplace-linter-check-catalog-mp-01-through-mp-15)
+- [DeepSeek Harness Plugin Check Catalog (`DSH-01` through `DSH-12`)](#deepseek-harness-plugin-check-catalog-dsh-01-through-dsh-12)
 - [CLI Tooling and Automated Execution](#cli-tooling-and-automated-execution)
 - [CI/CD Integration and PR Gating](#cicd-integration-and-pr-gating)
 
@@ -78,6 +79,25 @@ While `audit_static.py` validates individual procedural skills (`SKILL.md`), `au
 | **MP-13** | Error | Git-Subdir Source Format | Git-subdir sources require valid `url`, `path`, and `ref`. |
 | **MP-14** | Error | Archive Source Integrity | Archive sources require HTTPS `url` and a 64-character hex `sha256` checksum. |
 | **MP-15** | Error | Cross-Marketplace Dep List | `allowCrossMarketplaceDependenciesOn` must be a list of strings. |
+
+---
+
+## DeepSeek Harness Plugin Check Catalog (`DSH-01` through `DSH-12`)
+
+| Check ID | Severity | Check Name | Passing Condition & Fix |
+|---|---|---|---|
+| **DSH-01** | Error | Package Manifest Validity | `package.json` exists at bundle root and parses as valid JSON. |
+| **DSH-02** | Error | Identity and Semver | `name` is valid kebab-case or scoped package name and `version` is valid semver. |
+| **DSH-03** | Error | DSH Extension Configuration | `package.json` declares `"dsh": { "bundle": { "patch": "..." } }` or `"dsh": { "profile": ... }`. |
+| **DSH-04** | Error | Patch File Existence | The configuration patch file referenced in `dsh.bundle.patch` exists on disk. |
+| **DSH-05** | Error | Patch Schema Compliance | `cordis.patch.yml` contains valid patch actions (e.g. `insert`) with declared `id` and `name`. |
+| **DSH-06** | Error | Module Entrypoint Existence | `main` in `package.json` or fallback `src/index.ts` / `index.js` resolves to an existing file. |
+| **DSH-07** | Error | Entrypoint Exports | Plugin entrypoint exports a string `name` and lifecycle function `apply(ctx)`. |
+| **DSH-08** | Warning | Service Dependency Injection | `export const inject = [...]` declares dependencies when using services like `tools` or `persona`. |
+| **DSH-09** | Error | Tool Definition Integrity | Tools registered via `defineTool` declare valid `name`, `description`, `parameters`, and `execute`. |
+| **DSH-10** | Warning | Event System Naming | Event names registered with `ctx.on` or emitted with `ctx.emit` follow `namespace/action` conventions. |
+| **DSH-11** | Warning | Agent Preset / Persona Syntax | Agent presets (`agent.cordis.yml`) declare valid `name`, `persona`, and `tools` lists. |
+| **DSH-12** | Error | Credential Safety | Configuration patches and scripts must not contain plaintext API keys, passwords, or tokens. |
 
 ---
 
