@@ -1,0 +1,92 @@
+{
+  "skills": ["auditing-skills"],
+  "notes": "Guide-structured evaluations (query, files, expected_behavior). Run each query in a fresh session against the listed files and compare behavior. Record every run in results[] with the model name to build cross-model evidence (EV-02).",
+  "evals": [
+    {
+      "id": "audit-broken-skill",
+      "query": "Audit the skill at evals/fixtures/bad-skill and tell me what's wrong before I share it.",
+      "files": ["evals/fixtures/bad-skill/SKILL.md", "evals/fixtures/bad-skill/doc1.md"],
+      "expected_behavior": [
+        "Triggers the auditing-skills skill from the description (audit / before sharing).",
+        "Runs scripts/audit_static.py; final verdict FAIL with MD-04 (name charset), MD-06 (name/dir mismatch), SC-04 (backslash path), MD-12/MD-13/MD-14 (description), SC-08 (missing reference), and ST-05 (doc1.md filename).",
+        "Resolves needs_review heuristic flags at judgment instead of reporting them blind.",
+        "Includes the 22-item pre-share checklist; Testing items unchecked or n/a.",
+        "Never executes or imports anything from the audited skill."
+      ]
+    },
+    {
+      "id": "audit-clean-skill",
+      "query": "Please review auditing-skills against the agent skills best practices.",
+      "files": ["SKILL.md", "references/audit-checks.md", "references/pre-share-checklist.md", "references/report-template.md"],
+      "expected_behavior": [
+        "Static verdict PASS with zero error and zero warning findings.",
+        "Judgment checks applied and cited; any finding without a verbatim quote is dropped.",
+        "Pre-share checklist, strengths, and a not-audited section are present in the report."
+      ]
+    },
+    {
+      "id": "batch-audit",
+      "query": "Audit every skill in this directory: <parent directory containing skills>",
+      "files": [],
+      "expected_behavior": [
+        "Discovers each subdirectory containing SKILL.md and audits each one.",
+        "Leads the report with a cross-skill summary table (skill, verdict, worst finding)."
+      ]
+    },
+    {
+      "id": "trigger-paraphrase-preshare",
+      "query": "Is my skill ready to share? I want a second opinion before I publish it. The skill is at <dir>.",
+      "files": ["<the user's skill directory>"],
+      "expected_behavior": [
+        "Triggers from the paraphrase even though the word 'audit' never appears.",
+        "Runs the full workflow and ends at the pre-share checklist gate, not a generic code review."
+      ]
+    },
+    {
+      "id": "trigger-paraphrase-triggering",
+      "query": "Why does my skill never get picked when I ask about PDFs? Here it is: <dir>",
+      "files": ["<the user's skill directory>"],
+      "expected_behavior": [
+        "Triggers and focuses the MD area (description triggers and keywords), not generic prompting advice.",
+        "Cites MD-13/MD-15 with quoted evidence from the description and provides a concrete third-person rewrite."
+      ]
+    }
+  ],
+  "results": [
+    {
+      "date": "2026-11-07",
+      "model": "gemini-4-argon-medium",
+      "eval_id": "audit-broken-skill",
+      "pass": true,
+      "notes": "Static linter + checklist evaluator produced FAIL (3 errors: MD-04, MD-06, SC-04; 5 warnings: MD-12, MD-13, MD-14, SC-08, ST-05; 1 info: MD-07) and 22-item pre-share checklist."
+    },
+    {
+      "date": "2026-11-07",
+      "model": "gemini-4-argon-medium",
+      "eval_id": "audit-clean-skill",
+      "pass": true,
+      "notes": "Self-audit of auditing-skills passed with verdict PASS (0 errors, 0 warnings, 0 info) and all applicable pre-share checklist items verified."
+    },
+    {
+      "date": "2026-11-07",
+      "model": "gemini-3.8-flash-medium",
+      "eval_id": "audit-clean-skill",
+      "pass": true,
+      "notes": "Verified auditing-skills self-audit passes cleanly (verdict PASS) under gemini-3.8-flash-medium."
+    },
+    {
+      "date": "2026-11-07",
+      "model": "gemini-3.8-flash-medium",
+      "eval_id": "audit-broken-skill",
+      "pass": true,
+      "notes": "Verified fixture bad-skill triggers FAIL with expected findings under gemini-3.8-flash-medium."
+    },
+    {
+      "date": "2026-11-07",
+      "model": "gemini-3.8-flash-lite",
+      "eval_id": "audit-clean-skill",
+      "pass": true,
+      "notes": "Audited core files for prose conciseness (CQ-01), terminology consistency (CQ-03), and examples (CQ-04) using the cheapest model tier (flash_lite / haiku equivalent)."
+    }
+  ]
+}

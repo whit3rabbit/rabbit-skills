@@ -1,0 +1,22 @@
+{
+  "name": "skill-auditor",
+  "displayName": "Agent Skill Studio & Auditor",
+  "version": "1.0.0",
+  "description": "Create, scaffold, audit, lint, and place agent skills against Anthropic's Agent Skills best practices across 29 harnesses (Claude Code, Cursor, Antigravity, OpenCode, etc.).",
+  "author": {
+    "name": "Skill Auditor Community"
+  },
+  "repository": "https://github.com/whit3rabbit/skill-auditor",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "agent-skills",
+    "auditor",
+    "linter",
+    "scaffolder",
+    "claude-code",
+    "antigravity",
+    "cursor",
+    "anthropic"
+  ]
+}
