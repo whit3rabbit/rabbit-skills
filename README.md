@@ -9,7 +9,9 @@ Author, scaffold, audit, and deploy agent skills across 30 harnesses, and valida
 | [rabbit-skills-audit](skills/rabbit-skills-audit/) | Author, scaffold, and lint `SKILL.md` agent skills. 45 checks across metadata, structure, content, workflows, scripts, and evals, plus the official 22-item pre-share checklist and a placement engine for 30 harnesses. |
 | [rabbit-plugin-audit](skills/rabbit-plugin-audit/) | Scaffold and lint Claude Code / Codex plugins and marketplace catalogs. 33 checks across `plugin.json`, lifecycle hooks, MCP configs, and `marketplace.json`. |
 
-Each skill is self-contained (`SKILL.md` workflow, `scripts/`, `references/`), so you can copy its directory into any harness as-is. The [companion rabbit-writes suite](https://github.com/whit3rabbit/rabbit-writes) is also served by this marketplace.
+Each skill is self-contained (`SKILL.md` workflow, `scripts/`, `references/`), so you can copy its directory into any harness as-is.
+
+The companion [rabbit-writes](https://github.com/whit3rabbit/rabbit-writes) suite is also in this marketplace: six skills for writing and editing in your own voice, not a chatbot's. Voice profiles, AI-pattern scanning, and README and docs workflows. This README was written with it. Install it with `claude plugin install rabbit-writes`.
 
 ## Install
 
