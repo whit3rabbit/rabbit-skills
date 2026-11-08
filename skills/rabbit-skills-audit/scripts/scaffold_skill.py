@@ -2,7 +2,7 @@
 """Skill Scaffolder and Harness Placement Manager.
 
 Generates 100% best-practice compliant agent skills ("Born Clean") and places
-them into the appropriate directories across 29 supported agent harnesses.
+them into the appropriate directories across 30 supported agent harnesses.
 
 Standard library only (`argparse`, `json`, `pathlib`, `re`, `sys`, `shutil`).
 Runs standalone or as part of the rabbit-skills suite.
@@ -102,6 +102,12 @@ HARNESS_MATRIX = {
         "global": "~/.config/github-copilot/skills/{name}",
         "doc": "references/harnesses/github-copilot.md",
     },
+    "hermes": {
+        "name": "Hermes Agent (Nous Research)",
+        "project": ".hermes/skills/{name}",
+        "global": "~/.hermes/skills/{name}",
+        "doc": "references/harnesses/hermes.md",
+    },
     "iflow-cli": {
         "name": "iFlow CLI",
         "project": ".iflow/skills/{name}",
@@ -147,7 +153,7 @@ HARNESS_MATRIX = {
     "pi": {
         "name": "Pi Coding Agent",
         "project": ".pi/skills/{name}",
-        "global": "~/.pi/skills/{name}",
+        "global": "~/.pi/agent/skills/{name}",
         "doc": "references/harnesses/pi.md",
     },
     "posit-assistant": {

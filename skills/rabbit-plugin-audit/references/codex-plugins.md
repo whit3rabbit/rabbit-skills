@@ -2,6 +2,8 @@
 
 A reference guide for authoring, packaging, configuring, and distributing plugins for OpenAI Codex and ChatGPT. Grounded in the official OpenAI Developer documentation: portable Agent Plugins specifications, OpenAI extensions, MCP server configuration, and Codex harness file structures.
 
+**Official documentation:** [Package your plugin](https://developers.openai.com/plugins/build/plugins) (OpenAI Developers, verified 8 November 2026).
+
 ## Contents
 
 - [Codex Plugin Architecture and Portable Specification](#codex-plugin-architecture-and-portable-specification)
@@ -205,10 +207,10 @@ Codex and ChatGPT resolve plugins across user, repository, and system scopes:
 
 | Scope | Path on Disk | Purpose |
 |---|---|---|
-| **Local / Project Scope** | `<repo-root>/.codex/plugins/<plugin-name>/`<br>*(or `<repo-root>/.agents/plugins/<plugin-name>/`)* | Version-controlled or private plugins dedicated to one codebase. |
-| **User / Personal Scope** | `~/.codex/plugins/<plugin-name>/`<br>*(or `~/.agents/plugins/<plugin-name>/`)* | Developer's global plugins available across all repositories. |
+| **Local / Project Scope** | `<repo-root>/plugins/<plugin-name>/` (or any folder a marketplace `source.path` points at; `./.codex/plugins/<plugin-name>/` is the common personal pattern) | Version-controlled or private plugins dedicated to one codebase. |
+| **User / Personal Scope** | Personal marketplace catalog at `~/.agents/plugins/marketplace.json`; installed copies load from the install cache below. | Developer's global plugins available across all repositories. |
 | **System / Machine Scope** | `/etc/codex/plugins/<plugin-name>/` | Pre-installed system plugins on multi-user workstations or CI containers. |
-| **Cache Root** | `~/.codex/cache/plugins/` | Downloaded remote plugins and marketplace caches. |
+| **Install Cache** | `~/.codex/plugins/cache/<marketplace>/<plugin>/<version>/` | Installed copies that Codex and ChatGPT load at runtime; local installs use version `local` and load from cache, not from the marketplace path. |
 
 ---
 
@@ -237,11 +239,14 @@ enabled = false
 [plugins.permissions.code-intelligence]
 allowed_tools = ["read_file", "edit_file", "run_command"]
 
-# Register a custom local or team marketplace
-[[plugins.marketplaces]]
-name = "internal-marketplace"
-source = "https://github.com/example-org/codex-plugins-marketplace.git"
+# Enable a marketplace plugin for this repository
+# (key format: "<plugin-name>@<marketplace-name>", where the marketplace
+# name is the catalog's top-level "name")
+[plugins."my-plugin@local-repo"]
+enabled = true
 ```
+
+Marketplace registration is done through the CLI (`codex plugin marketplace add`), not by editing `config.toml` by hand. Administrators can also define local or Git marketplaces in system `config.toml`. Those sources use the same marketplace catalog format.
 
 ---
 
@@ -249,28 +254,45 @@ source = "https://github.com/example-org/codex-plugins-marketplace.git"
 
 Codex plugins can be shared via:
 1. **Universal Plugin Directory:** The shared, public directory accessible to both ChatGPT and Codex desktop users. Published via the OpenAI Developer submission portal.
-2. **Local and Repository Marketplaces:** Defined in `.codex-plugin/marketplace.json` or `.agents/marketplace.json`.
+2. **Local and Repository Marketplaces:** JSON catalogs read from `$REPO_ROOT/.agents/plugins/marketplace.json` (repo-scoped), `~/.agents/plugins/marketplace.json` (personal), or legacy-compatible `$REPO_ROOT/.claude-plugin/marketplace.json`.
+
+### Marketplace CLI (`codex plugin marketplace`)
+
+```bash
+codex plugin marketplace add owner/repo
+codex plugin marketplace add owner/repo --ref main
+codex plugin marketplace add ./local-marketplace-root
+codex plugin marketplace list
+codex plugin marketplace upgrade
+codex plugin marketplace remove marketplace-name
+```
+
+Sources may be GitHub shorthand (`owner/repo` or `owner/repo@ref`), HTTPS or SSH Git URLs (with repeatable `--sparse PATH` for a partial checkout), or local marketplace root directories. Install and test plugins from the Plugins Directory in the ChatGPT desktop app.
 
 ### Marketplace Manifest (`marketplace.json`)
 
 ```json
 {
-  "name": "internal-codex-catalog",
-  "description": "Internal engineering plugins for Codex and ChatGPT",
-  "owner": { "name": "Tooling Team" },
+  "name": "local-example-plugins",
+  "interface": { "displayName": "Local Example Plugins" },
   "plugins": [
     {
-      "name": "code-intelligence",
-      "description": "Automated code refactoring and AST analysis",
-      "version": "1.0.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/example-org/code-intelligence.git"
-      }
+      "name": "my-plugin",
+      "source": { "source": "local", "path": "./plugins/my-plugin" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
     }
   ]
 }
 ```
+
+Manifest rules (official format, distinct from the Claude Code catalog format):
+
+- Top-level `name` identifies the marketplace. `interface.displayName` is the title shown in the ChatGPT desktop app.
+- Each entry's `source.path` is `./`-prefixed and resolves relative to the marketplace root, not the `.agents/plugins/` folder. For local entries, `source` can also be a plain string path.
+- Git-backed entries use `"source": "url"` when the plugin lives at the repository root, or `"git-subdir"` with `url`, `path`, and optional `ref` or `sha` selectors. Registry-backed entries use `"source": "npm"` with a required `package` plus optional `version` and `registry`.
+- Always include `policy.installation` (`AVAILABLE`, `INSTALLED_BY_DEFAULT`, or `NOT_AVAILABLE`), `policy.authentication` (auth at install time, or on first use), and `category` on each entry.
+- If an entry's source cannot be resolved, Codex skips that entry instead of failing the whole marketplace.
 
 ---
 
@@ -359,8 +381,8 @@ When authoring cross-harness plugins, separate shared components from harness-sp
 | **Root Manifest** | `plugin.json` (agent-plugins schema) | Accepts `.claude-plugin/plugin.json` or root `plugin.json` | Accepts `.codex-plugin/plugin.json` or root `plugin.json` with `extensions.com.openai` |
 | **Skills Directory** | `skills/<name>/SKILL.md` (progressive disclosure) | Namespaced invocation `/plugin:skill`; frontmatter `allowed-tools` | Invoked via `$name` or `@name`; frontmatter `allowed-tools` |
 | **MCP Definition** | `mcp.json` (`agent-plugins.org` schema) | `.mcp.json` or manifest `mcpServers`; parameters `${config.KEY}` | `mcp.json` with transport `type`; auth in `extensions["com.openai"].auth` |
-| **Marketplace Catalog** | `marketplace.json` | `.claude-plugin/marketplace.json`; verified on `claude.com/marketplace` | `.codex-plugin/marketplace.json`; universal directory shared with ChatGPT |
-| **Install Locations** | `<repo>/plugins/` or `~/.<agent>/plugins/` | Cache: `~/.claude/plugins/cache/<market>/<pkg>/<v>/`; Data: `~/.claude/plugins/data/` | Cache: `~/.codex/cache/plugins/`; Paths: `~/.codex/plugins/` or `.codex/plugins/` |
+| **Marketplace Catalog** | `marketplace.json` | `.claude-plugin/marketplace.json`; verified on `claude.com/marketplace` | `.agents/plugins/marketplace.json` (repo) or `~/.agents/plugins/marketplace.json` (personal), plus legacy-compatible `.claude-plugin/marketplace.json`; universal directory shared with ChatGPT |
+| **Install Locations** | `<repo>/plugins/` or `~/.<agent>/plugins/` | Cache: `~/.claude/plugins/cache/<market>/<pkg>/<v>/`; Data: `~/.claude/plugins/data/` | Cache: `~/.codex/plugins/cache/<marketplace>/<plugin>/<version>/`; authoring pattern `./.codex/plugins/<plugin>/` |
 | **Configuration File** | None (standardized settings) | JSON: `~/.claude/settings.json`, `.claude/settings.local.json` | TOML: `~/.codex/config.toml`, `.codex/config.toml` |
 | **Lifecycle Hooks** | `hooks/hooks.json` | Zero-token harness triggers on `SessionStart`, `PreToolUse`, `PostToolUse` | Supported on Codex desktop manual installs under `extensions.com.openai.hooks` |
 | **Validation & Testing** | None | CLI: `claude plugin validate .`, `claude plugin eval .`, `claude plugin details` | Interactive: `@plugin-creator` built-in scaffolding and test harness |

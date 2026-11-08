@@ -3,7 +3,7 @@
 Reference guide for skill discovery, layout, configuration, and execution in Pi Coding Agent (`pi`).
 
 - **Harness Identifier:** `--agent pi`
-- **Documentation:** https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/skills.md
+- **Documentation:** https://pi.dev/docs/latest/skills and https://pi.dev/docs/latest/configuration (verified 8 November 2026)
 - **Specification:** [Agent Skills Specification](https://agentskills.io/specification)
 
 ## Contents
@@ -21,12 +21,12 @@ Reference guide for skill discovery, layout, configuration, and execution in Pi 
 
 Pi searches for skills across project and global user locations:
 
-| Scope | Path | Description |
+| Scope | Path | Source |
 |---|---|---|
-| Project (Standard) | `.agents/skills/` | Standard Agent Skills project directory; discovered recursively up to repository root. |
-| Project (Harness-specific) | `.pi/skills/` | Pi-specific project skills directory. |
-| User / Global (Standard) | `~/.agents/skills/` | Standard global Agent Skills directory available across projects. |
-| User / Global (Harness-specific) | `~/.pi/skills/` | Global skills specific to Pi Coding Agent. |
+| Project | `.agents/skills/` | Agent Skills standard location; discovered from the working directory through its ancestors, stopping at the repository root. |
+| Project | `.pi/skills/` | Pi project resources directory (configuration docs). |
+| User / Global | `~/.agents/skills/` | Agent Skills standard global location (skills docs). |
+| User / Global | `~/.pi/agent/skills/` | Pi agent-directory resources. The agent directory defaults to `~/.pi/agent` and can be moved via `PI_CODING_AGENT_DIR` (configuration docs). |
 
 ## Directory Layout
 
@@ -58,11 +58,12 @@ Pi configuration files reside in global user directories and project-level direc
 
 | Configuration Scope | Path | Purpose |
 |---|---|---|
-| User Configuration Root | `~/.pi/` | Global agent settings, profiles, and model configurations. |
-| User Settings File | `~/.pi/settings.json` | Global flags (e.g., `enableSkillCommands`). |
-| User Profiles & Models | `~/.pi/agent/`, `~/.pi/models/` | Model providers, agent persona profiles, and defaults. |
-| Project Configuration Root | `.pi/` | Project-scoped overrides for settings and skills. |
+| User Configuration Root (agent directory) | `~/.pi/agent/` | Global settings, keybindings, MCP, models, auth, and resource directories (`extensions/`, `skills/`, `prompts/`, `themes/`). Movable via `PI_CODING_AGENT_DIR`. |
+| User Settings File | `~/.pi/agent/settings.json` | Global flags (e.g., `enableSkillCommands`) and resource lists. |
+| Project Configuration Root | `.pi/` | Project-scoped overrides for settings and resources. |
 | Project Settings File | `.pi/settings.json` | Project-level configuration overrides. |
+
+The `skills` settings key (a string array) adds skill files or directories on top of the documented locations. Resource paths in user settings resolve from the agent directory, and paths in project settings resolve from the project `.pi` directory.
 
 ### Skill Configuration Options
 
@@ -72,7 +73,7 @@ Pi configuration files reside in global user directories and project-level direc
 
 Pi implements progressive disclosure to minimize context window usage:
 
-1. **Startup Discovery**: Pi scans configured skill roots (`.agents/skills/`, `.pi/skills/`, `~/.agents/skills/`, `~/.pi/skills/`) recursively.
+1. **Startup Discovery**: Pi scans the documented skill roots (`.agents/skills/` ancestor-walked to the repository root, `.pi/skills/`, `~/.agents/skills/`, and the agent-directory `skills/`) recursively.
 2. **System Prompt Registration**: Only the `name`, `description`, and file system path of each discovered skill are injected into the system prompt at startup (~100 tokens per skill). Full instructions are omitted.
 3. **Ancestor Search**: Project skills in `.agents/skills/` are discovered from the current working directory walking up through ancestor directories, halting at the repository root.
 4. **Collision Precedence**: When two skills share identical `name` values, Pi retains the first discovered skill and outputs a diagnostic warning. Project-level skills discovered earlier in the ancestor chain take precedence over global user-level skills.

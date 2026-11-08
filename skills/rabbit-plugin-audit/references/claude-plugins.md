@@ -2,6 +2,8 @@
 
 A comprehensive guide for authoring, evaluating, optimizing, distributing, and installing Claude Code plugins. Grounded in the official Anthropic Claude Code specifications: plugin creation, component schemas, marketplace file structures, installation filesystem placement, dependency resolution, evaluation harnesses, cost telemetry, and quality linting.
 
+**Official documentation:** [Plugins overview](https://code.claude.com/docs/en/plugins) (Claude Code docs, verified 8 November 2026).
+
 ## Contents
 
 - [Plugin Architecture and Mental Model](#plugin-architecture-and-mental-model)

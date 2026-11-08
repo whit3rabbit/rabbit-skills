@@ -1,6 +1,6 @@
 # rabbit-skills
 
-Claude Code and Codex plugin studio and marketplace for agent skills across 29 harnesses, and plugin/marketplace validation.
+Claude Code and Codex plugin studio and marketplace for agent skills across 30 harnesses, and plugin/marketplace validation.
 
 Repository: https://github.com/whit3rabbit/rabbit-skills
 
@@ -31,15 +31,15 @@ One home per fact. Each skill under `skills/<name>/` is completely self-containe
 - **`.claude-plugin/`**:
   - `plugin.json`: Plugin manifest for `rabbit-skills` (v1.0.0). Keeps always-on token cost under 150 tokens (`PL-12`).
   - `marketplace.json`: Marketplace catalog indexing `rabbit-skills` and pointing to `whit3rabbit/rabbit-writes`.
-- **`skills/rabbit-skills-audit/`**: Agent skill authoring, static auditing, and 29-harness deployment.
+- **`skills/rabbit-skills-audit/`**: Agent skill authoring, static auditing, and 30-harness deployment.
   - `SKILL.md`: Main progressive disclosure workflow (<500 lines).
   - `scripts/audit_static.py`: Read-only deterministic static linter (45 checks across `MD`, `ST`, `CQ`, `WF`, `SC`, `EV`).
-  - `scripts/scaffold_skill.py`: "Born-Clean" skill scaffolder and placement engine for 29 harnesses.
+  - `scripts/scaffold_skill.py`: "Born-Clean" skill scaffolder and placement engine for 30 harnesses.
   - `scripts/frontmatter.py`: Zero-dependency YAML frontmatter parser fallback.
   - `references/audit-checks.md`: Full catalog of 45 checks with Good/Bad examples.
   - `references/pre-share-checklist.md`: Official Anthropic 22-item pre-share checklist mapped to check IDs.
   - `references/report-template.md`: Verdict criteria and markdown report template.
-  - `references/harnesses/`: 29 markdown guides detailing paths and precedence for all supported agent harnesses.
+  - `references/harnesses/`: 30 markdown guides detailing paths and precedence for all supported agent harnesses.
   - `evals/`: 5 evaluation scenarios and test fixture (`fixtures/bad-skill/`) used by `--self-test`.
 - **`skills/rabbit-plugin-audit/`**: Plugin and marketplace manifest linter and scaffolder.
   - `SKILL.md`: Plugin and marketplace workflow instructions.

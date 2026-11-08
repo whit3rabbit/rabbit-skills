@@ -1,6 +1,6 @@
 ---
 name: rabbit-skills-audit
-description: Scaffold, audit, lint, and deploy agent skills against Anthropic's 45 best practices across 29 harnesses (Claude Code, Cursor, Antigravity). Use when creating, auditing, linting, scoring, or placing skills across harnesses.
+description: Scaffold, audit, lint, and deploy agent skills against Anthropic's 45 best practices across 30 harnesses (Claude Code, Cursor, Antigravity). Use when creating, auditing, linting, scoring, or placing skills across harnesses.
 ---
 
 # Auditing and Improving Agent Skills
@@ -131,7 +131,7 @@ Useful flags: `--checklist` (adds the 22-item checklist to text output), `--area
 - [`evals/README.md`](evals/README.md): evaluation suite guide and test runner instructions
 - [`evals/evals.json`](evals/evals.json): 5 evaluation scenarios and cross-model results log
 - [`scripts/audit_static.py`](scripts/audit_static.py): modular static linter + checklist evaluator (`--self-test` supported)
-- [`scripts/scaffold_skill.py`](scripts/scaffold_skill.py): compliant skill scaffolder and 29-harness placement manager (`--self-test` supported)
+- [`scripts/scaffold_skill.py`](scripts/scaffold_skill.py): compliant skill scaffolder and 30-harness placement manager (`--self-test` supported)
 - [`scripts/frontmatter.py`](scripts/frontmatter.py): stdlib YAML frontmatter parser (`--self-test` supported)
 
 ### Harness references
@@ -150,6 +150,7 @@ Harness-specific skill layouts, project vs. user paths, settings locations, and 
 - [`references/harnesses/firebender.md`](references/harnesses/firebender.md): Firebender multi-agent skills layout and workspace scopes
 - [`references/harnesses/gemini-cli.md`](references/harnesses/gemini-cli.md): Gemini CLI skills layout, project vs. global paths, and configuration
 - [`references/harnesses/github-copilot.md`](references/harnesses/github-copilot.md): GitHub Copilot Agent skills layout and repository instructions
+- [`references/harnesses/hermes.md`](references/harnesses/hermes.md): Hermes Agent (Nous Research) skills layout, hub installation, and GitHub taps
 - [`references/harnesses/iflow-cli.md`](references/harnesses/iflow-cli.md): iFlow CLI skills layout, configuration scopes, and workflows
 - [`references/harnesses/kimi-code.md`](references/harnesses/kimi-code.md): Kimi Code CLI skills layout, configuration, and precedence order
 - [`references/harnesses/kiro-cli.md`](references/harnesses/kiro-cli.md): Kiro CLI skills layout and custom agent resource configuration
