@@ -1350,7 +1350,7 @@ def _list_checks():
 
 
 def _self_test():
-    """Verify area linters and checklist on `auditing-skills` and `evals/fixtures/bad-skill`."""
+    """Verify area linters and checklist on `rabbit-skills-audit` and `evals/fixtures/bad-skill`."""
     skill_root = Path(__file__).resolve().parent.parent
     bad_skill = skill_root / "evals" / "fixtures" / "bad-skill"
     failures = []

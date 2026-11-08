@@ -5,7 +5,7 @@ Generates 100% best-practice compliant agent skills ("Born Clean") and places
 them into the appropriate directories across 29 supported agent harnesses.
 
 Standard library only (`argparse`, `json`, `pathlib`, `re`, `sys`, `shutil`).
-Runs standalone or as part of the auditing-skills suite.
+Runs standalone or as part of the rabbit-skills suite.
 
 Usage:
   python3 scaffold_skill.py <skill-name> [options]
@@ -617,7 +617,7 @@ def main():
                 print(f"  ✗ Failed to deploy to {secondary_key}: {exc}")
 
     print(f"\nTo audit immediately:")
-    print(f"  python3 auditing-skills/scripts/audit_static.py {primary_dest} --strict\n")
+    print(f"  python3 skills/rabbit-skills-audit/scripts/audit_static.py {primary_dest} --strict\n")
 
 
 if __name__ == "__main__":

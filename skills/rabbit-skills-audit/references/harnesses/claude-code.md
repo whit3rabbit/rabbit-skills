@@ -17,6 +17,7 @@ Reference guide for skill discovery, directory structure, configuration preceden
 - [Directory Layout](#directory-layout)
 - [Invocation](#invocation)
 - [Concrete Example](#concrete-example)
+- [Plugins, Evals, & Cost Profiling](#plugins-evals--cost-profiling)
 
 ---
 
@@ -312,3 +313,11 @@ Target comparison: $branch (defaults to `main` if omitted).
 2. Inlines `git diff --stat main` output via dynamic context injection.
 3. Inspects changed files using pre-approved read and git tools without interactive confirmation prompts.
 4. Returns formatted review findings matching the Output Format template.
+
+---
+
+## Plugins, Evals, & Cost Profiling
+
+Claude Code supports packaging skills, commands, subagents, hooks, MCP servers, and LSP servers into unified plugins via `plugin.json`.
+
+For the complete guide on plugin creation, component schemas, dependency management, empirical testing with `claude plugin eval`, context window cost profiling with `claude plugin details`, and the plugin linter quality catalog, refer to the companion skill **rabbit-plugin-audit** (`claude-plugins.md`).

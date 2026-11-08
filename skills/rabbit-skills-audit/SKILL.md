@@ -1,6 +1,6 @@
 ---
-name: auditing-skills
-description: Creates, scaffolds, audits, lints, and improves agent skills against Anthropic's Agent Skills best practices across 29 harnesses (Claude Code, Cursor, Antigravity, etc.). Produces compliant skills, evidence-based reports, pre-share checklists, and concrete fixes. Use when creating a new skill, scaffolding skill files, auditing, reviewing, linting, scoring, fixing, or improving an existing skill or SKILL.md, deploying or placing skills across multiple harnesses, or before publishing or sharing a skill.
+name: rabbit-skills-audit
+description: Scaffold, audit, lint, and deploy agent skills against Anthropic's 45 best practices across 29 harnesses (Claude Code, Cursor, Antigravity). Use when creating, auditing, linting, scoring, or placing skills across harnesses.
 ---
 
 # Auditing and Improving Agent Skills
@@ -54,7 +54,21 @@ Match the user's intent to the appropriate task mode:
 
 When asked to create a new skill:
 
-1. **Intake & Interview:** Determine skill name, domain, degree of freedom (high/medium/low), and target trigger queries/artifacts.
+1. **Intake & Use-Case Planning:**
+   - **Brainstorm User Expectations:** List what users will reasonably expect from the skill's name, description, and keywords. Gather direct requests (naming the skill) and indirect requests (stating the user's goal without naming the skill).
+   - **Build Use-Case Inventory:** Map each supported workflow:
+     - *User goal:* What the person is trying to accomplish.
+     - *Example requests:* Direct and indirect prompt phrasing.
+     - *Expected result:* Tangible output that defines success.
+     - *Required context:* Files, dependencies, environment state, or permissions needed.
+     - *Capability choice:* Skill (`SKILL.md`) vs. external tool/script vs. UI.
+     - *Safety boundary:* Data exposure, state mutation, filesystem changes, or side effects.
+     - *Support decision:* Support in v1, defer, or intentionally exclude.
+   - **Check Coverage & Exclusions:** Confirm an unbroken path from request to verified result. Ensure scripts/tools complete recognizable user goals rather than exposing raw technical mechanics. Document intentional exclusions with clear rationales (safety risks, unverified permissions, API unreliability) to define refusal behaviors and negative tests.
+   - **Choose the Smallest Implementation:**
+     - Add a **skill** when instructions, examples, or bundled resources guide the model through the workflow.
+     - Add a **script or MCP tool** when the workflow requires live data, authentication, controlled tools, or runtime code execution.
+     - Add **UI** only when visual interaction materially improves the workflow.
 2. **Scaffold with `scripts/scaffold_skill.py`:** Run:
    ```bash
    # Single or multi-harness deployment:
@@ -89,7 +103,7 @@ Audit Progress:
 python3 scripts/audit_static.py <skill-dir> --format markdown
 
 # Or from workspace root with installed path:
-python3 <path-to-auditing-skills>/scripts/audit_static.py <skill-dir> --format markdown
+python3 skills/rabbit-skills-audit/scripts/audit_static.py <skill-dir> --format markdown
 ```
 
 Useful flags: `--checklist` (adds the 22-item checklist to text output), `--area MD,ST` (lint specific areas), `--check MD-04,SC-04` (filter checks), `--strict` (exit 1 on errors). Frontmatter parsing falls back to [`scripts/frontmatter.py`](scripts/frontmatter.py) when PyYAML is absent.
@@ -101,6 +115,7 @@ Useful flags: `--checklist` (adds the 22-item checklist to text output), `--area
   2. Rotating synonyms for the same concept (CQ-03).
   3. Missing input/output examples or strict templates (CQ-04).
   4. Unclear degrees of freedom or option dumps without defaults (CQ-05).
+  5. Use-case coverage and scope: Verifying that user expectations from name/description are fulfilled, technical actions complete recognizable user goals, write operations have confirmation/verification, and intentional exclusions are explained.
 
 **Step 4: Verify the pre-share checklist.** Review the 22-item checklist from [`references/pre-share-checklist.md`](references/pre-share-checklist.md) (pre-populated by `evaluate_checklist` in Step 2). Confirm every `[?]` item with cited `file:line` evidence or open a matching finding. Mark script items `n/a` when no scripts exist.
 

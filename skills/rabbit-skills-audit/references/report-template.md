@@ -20,7 +20,7 @@ confirmed or dropped before computing the final verdict.
 ```markdown
 # Skill audit: <skill-name>
 
-- **Path:** <path> · **Date:** <YYYY-MM-DD> · **Auditor:** auditing-skills
+- **Path:** <path> · **Date:** <YYYY-MM-DD> · **Auditor:** rabbit-skills-audit
 - **Standard:** Anthropic Agent Skills best practices
   (https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
 - **Verdict:** <FAIL | PASS WITH WARNINGS | PASS> — <e> errors, <w> warnings, <i> info

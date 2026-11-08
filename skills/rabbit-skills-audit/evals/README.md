@@ -27,7 +27,7 @@ python3 scripts/audit_static.py evals/fixtures/bad-skill
 
 Fixtures are excluded from the skill's own structure checks (they are test
 data, not reference material), so they never appear as findings when auditing
-`auditing-skills` itself.
+`rabbit-skills-audit` itself.
 
 ## Why so few evals are automated
 

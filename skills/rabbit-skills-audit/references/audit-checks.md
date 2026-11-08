@@ -25,7 +25,7 @@ Cite the check ID and `file:line` with a verbatim quote in every finding.
 
 ## Area MD — Metadata (`lint_metadata`)
 
-At startup, only `name` and `description` from all installed skills are pre-loaded into the system prompt (~100 tokens/skill). They drive triggering among 100+ skills and pay a permanent token cost.
+At startup, only `name` and `description` from all installed skills are pre-loaded into the system prompt (~100 tokens/skill). They drive triggering among 100+ skills and pay a permanent token cost. A structured use-case inventory directly guides writing concise, specific `description` frontmatter that covers both what the skill does and when to use it, preventing scope creep and intent collision across direct and indirect prompts.
 Source: "YAML Frontmatter", "Naming conventions", "Writing effective descriptions".
 
 | ID | Severity | Method | Rule |
@@ -127,7 +127,7 @@ or pdfplumber, or PyMuPDF, or pdf2image depending on your preference. First inst
 
 ## Area WF — Workflows and feedback loops (`lint_workflows`)
 
-Complex tasks need sequential steps, copyable progress checklists, conditional branches, and validation loops.
+Complex tasks need sequential steps, copyable progress checklists, conditional branches, and validation loops. A coverage check ensures every supported use case has an unbroken execution path from user request to verified result, and that write actions require authorization or confirmation.
 Source: "Use workflows for complex tasks", "Implement feedback loops", "Conditional workflow pattern".
 
 | ID | Severity | Method | Rule |
@@ -191,7 +191,7 @@ def read_config(path):
 
 ## Area EV — Evaluation and testing evidence (`lint_evaluations`)
 
-Static audit checks for *shipped evidence* of evaluation; runtime behavior itself is always listed under "Not audited" unless live evals are executed.
+Static audit checks for *shipped evidence* of evaluation; runtime behavior itself is always listed under "Not audited" unless live evals are executed. A use-case inventory serves as the primary matrix for generating direct, indirect, edge-case, and negative/out-of-scope test scenarios.
 Source: "Build evaluations first", "Test with all models you plan to use", "Develop Skills iteratively with Claude", "Observe how Claude navigates Skills".
 
 | ID | Severity | Method | Rule |

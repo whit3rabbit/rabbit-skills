@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "rabbit-skills",
+  "description": "Scaffold, audit, and place agent skills across 29 harnesses; validate Claude Code and Codex plugins.",
+  "version": "1.0.0",
+  "author": {
+    "name": "whit3rabbit",
+    "url": "https://github.com/whit3rabbit"
+  },
+  "homepage": "https://github.com/whit3rabbit/rabbit-skills",
+  "repository": "https://github.com/whit3rabbit/rabbit-skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "agent-skills",
+    "auditor",
+    "linter",
+    "scaffolder",
+    "plugins",
+    "claude-code",
+    "antigravity",
+    "cursor",
+    "anthropic",
+    "marketplace"
+  ]
+}

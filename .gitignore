@@ -26,5 +26,11 @@ venv/
 coverage.xml
 htmlcov/
 
+# Local agent caches / scratch (preserve .claude-plugin)
+.claude/*
+!.claude/
+!.claude-plugin/
+scratch/
+
 # Audit output
 *-audit.md

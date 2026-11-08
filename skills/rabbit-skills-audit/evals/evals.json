@@ -1,5 +1,5 @@
 {
-  "skills": ["auditing-skills"],
+  "skills": ["rabbit-skills-audit"],
   "notes": "Guide-structured evaluations (query, files, expected_behavior). Run each query in a fresh session against the listed files and compare behavior. Record every run in results[] with the model name to build cross-model evidence (EV-02).",
   "evals": [
     {
