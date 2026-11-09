@@ -25,6 +25,15 @@ Artifact families and how they are recognized:
 
 Two managed formats written by `rabbit_dsh.py` are recognized structurally: `# rabbit-dsh managed MCP patch` (JSON payload) and `# rabbit-dsh managed plugin patch` (YAML payload). Parsing uses a restricted line scanner, not a full YAML engine. Unrecognized shapes become notes, never errors.
 
+## Contents
+
+- [Patch layer & presets (DA-01..DA-08)](#patch-layer--presets-da-01da-08)
+- [Workflow definitions (DA-09..DA-12)](#workflow-definitions-da-09da-12)
+- [Runtime settings (DA-13..DA-16)](#runtime-settings-da-13da-16)
+- [Bundle manifest & credentials (DA-17, DA-18)](#bundle-manifest--credentials-da-17-da-18)
+- [Session logs (DA-19..DA-21)](#session-logs-da-19da-21)
+- [Known version skew (read before trusting any single doc)](#known-version-skew-read-before-trusting-any-single-doc)
+
 ---
 
 ## Patch layer & presets (DA-01..DA-08)

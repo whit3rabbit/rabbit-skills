@@ -16,6 +16,7 @@ Choose the smallest artifact that meets the request. For a design review, identi
 | Connect an MCP server | [MCP integration](references/mcp-integration.md). |
 | Orchestrate agents or verify a goal across rounds | [Workflows and Ralph](references/workflow-ralph.md). |
 | Initialize a workspace or inspect its settings | [Configuration commands](references/quick-reference.md#configuration-commands), [environment variables](references/ENV.md), and [telemetry](references/TELEMETRY.md). |
+| Re-sync or update the offline docs corpus | Re-fetch official and community documentation with [scrape_docs.py](scripts/scrape_docs.py). |
 
 ## Choose the API before writing code
 
@@ -44,7 +45,7 @@ See [example verification](examples/verification.md) for expected discovery, inv
 
 ## Find an offline reference
 
-Start with [the reference index](references/official-reference-guide.md). Search for the API or behavior by name, then use the path and heading from the result to read the relevant section. Community pages are useful for context. Use the official result for an API contract. If DeepSeek Harness is new to you, `docs map` prints the whole concept-to-document map in one call, and `docs map <topic>` filters it.
+Start with [the reference index](references/official-reference-guide.md). Search for the API or behavior by name, then use the path and heading from the result to read the relevant section. Community pages are useful for context. Use the official result for an API contract. If DeepSeek Harness is new to you, `docs map` prints the whole concept-to-document map in one call, and `docs map <topic>` filters it. To re-fetch or update the offline documentation mirror, run [scripts/scrape_docs.py](scripts/scrape_docs.py).
 
 ```bash
 python3 "$rabbit_dsh_dir/scripts/rabbit_dsh.py" docs map            # cold-start orientation

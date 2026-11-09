@@ -69,7 +69,7 @@ One home per fact. Each skill under `skills/<name>/` is completely self-containe
   - `references/docs/`: 176 clean, offline-ready Markdown documents (98 official docs from deepseek-harness.github.io, including pinned extensions and testing notes, and 78 community docs from deepseekdocs.com).
   - `references/official-reference-guide.md`: Offline reference index routing authoring tasks to official docs and pinned notes.
   - `examples/`: Two worked examples (`review-sql-migration` skill, `schema-find-refs` Host tool bundle) plus `verification.md` discovery, invocation, and build/load/call/unload walkthroughs.
-  - `evals/`: 6 evaluation scenarios scoring observed tool calls and artifacts, with doc-read and retry efficiency targets.
+  - `evals/`: 8 evaluation scenarios (including trigger-paraphrase cases) scoring observed tool calls and artifacts, with doc-read and retry efficiency targets.
 
 ## Invariants & Rules for Agents
 

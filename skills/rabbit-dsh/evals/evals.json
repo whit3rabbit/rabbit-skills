@@ -128,6 +128,43 @@
         "retries_target": 1
       },
       "results": []
+    },
+    {
+      "id": "trigger-paraphrase-skill-authoring",
+      "query": "I want to package a specialized rubric and tests for our database migrations so my DeepSeek coding agent can run it autonomously.",
+      "files": [
+        "SKILL.md",
+        "references/quick-reference.md",
+        "examples/review-sql-migration/SKILL.md"
+      ],
+      "expected_behavior": [
+        "Triggers rabbit-dsh from the intent without typing 'rabbit-dsh'.",
+        "Routes to skill authoring rather than a generic plugin or workflow.",
+        "Recommends starting with the SQL migration review example or scaffolding with `rabbit_dsh.py scaffold skill`."
+      ],
+      "efficiency": {
+        "doc_reads_target": 0,
+        "retries_target": 0
+      },
+      "results": []
+    },
+    {
+      "id": "trigger-paraphrase-ralph-loop",
+      "query": "How do I configure my DSH agent to iteratively fix broken tests in a loop until they all pass?",
+      "files": [
+        "SKILL.md",
+        "references/workflow-ralph.md"
+      ],
+      "expected_behavior": [
+        "Triggers rabbit-dsh from the DSH iterative loop intent.",
+        "Routes to Ralph workflows and multi-agent orchestration.",
+        "Explains the difference between bounded loops in workflow scripts and interactive session turns."
+      ],
+      "efficiency": {
+        "doc_reads_target": 1,
+        "retries_target": 0
+      },
+      "results": []
     }
   ]
 }
