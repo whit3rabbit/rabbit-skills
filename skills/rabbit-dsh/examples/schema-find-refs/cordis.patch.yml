@@ -1,0 +1,3 @@
+- insert:
+    - id: schema-find-refs
+      name: '@rabbit-dsh/schema-find-refs'

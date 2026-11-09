@@ -8,6 +8,7 @@ Author, scaffold, audit, and deploy agent skills across 31 harnesses, and valida
 |---|---|
 | [rabbit-skills-audit](skills/rabbit-skills-audit/) | Author, scaffold, and lint `SKILL.md` agent skills. 45 checks across metadata, structure, content, workflows, scripts, and evals, plus the official 22-item pre-share checklist and a placement engine for 31 harnesses. |
 | [rabbit-plugin-audit](skills/rabbit-plugin-audit/) | Scaffold and lint Claude Code, Codex, and DeepSeek Harness plugins and marketplace catalogs. Checks across `plugin.json`, lifecycle hooks, MCP configs, Cordis patches, tools, and `marketplace.json`. |
+| [rabbit-dsh](skills/rabbit-dsh/) | Unified DeepSeek Harness (DSH) studio: scaffold skills, Cordis plugins, and multi-agent workflows; manage MCP servers and settings; search 176 offline consolidated official and community documentation guides. |
 
 Each skill is self-contained (`SKILL.md` workflow, `scripts/`, `references/`), so you can copy its directory into any harness as-is.
 
@@ -28,7 +29,7 @@ claude plugin install rabbit-skills
 codex plugin marketplace add whit3rabbit/rabbit-skills
 ```
 
-**Pi:** install as a package. The repo's root `skills/` directory matches Pi's conventional package layout, so both skills are discovered without a manifest:
+**Pi:** install as a package. The repo's root `skills/` directory matches Pi's conventional package layout, so all three skills are discovered without a manifest:
 
 ```bash
 pi install git:github.com/whit3rabbit/rabbit-skills@main
@@ -40,6 +41,7 @@ pi install git:github.com/whit3rabbit/rabbit-skills@main
 # GitHub source, pattern: owner/repo/skill (scanned under the repo's skills/ directory)
 hermes skills install whit3rabbit/rabbit-skills/rabbit-skills-audit
 hermes skills install whit3rabbit/rabbit-skills/rabbit-plugin-audit
+hermes skills install whit3rabbit/rabbit-skills/rabbit-dsh
 ```
 
 Copy route: `.hermes/skills/` for project scope, `~/.hermes/skills/` for global. Run `hermes skills trust` inside the repo so project skills load.
@@ -49,7 +51,7 @@ Copy route: `.hermes/skills/` for project scope, `~/.hermes/skills/` for global.
 ```bash
 git clone https://github.com/whit3rabbit/rabbit-skills.git
 mkdir -p .agents/skills
-cp -r rabbit-skills/skills/rabbit-skills-audit rabbit-skills/skills/rabbit-plugin-audit .agents/skills/
+cp -r rabbit-skills/skills/rabbit-skills-audit rabbit-skills/skills/rabbit-plugin-audit rabbit-skills/skills/rabbit-dsh .agents/skills/
 ```
 
 Copy into `~/.agents/skills/` instead for all-user scope. OpenCode can also register the clone without copying:
@@ -63,7 +65,7 @@ Copy into `~/.agents/skills/` instead for all-user scope. OpenCode can also regi
 
 ```bash
 mkdir -p .dsh/skills
-cp -r rabbit-skills/skills/rabbit-skills-audit rabbit-skills/skills/rabbit-plugin-audit .dsh/skills/
+cp -r rabbit-skills/skills/rabbit-skills-audit rabbit-skills/skills/rabbit-plugin-audit rabbit-skills/skills/rabbit-dsh .dsh/skills/
 ```
 
 **Any other harness or CI:** clone and run the scripts directly. Python 3 standard library is all you need:
@@ -92,6 +94,12 @@ python3 skills/rabbit-plugin-audit/scripts/audit_plugin.py /path/to/my-plugin --
 
 # Scaffold a new skill ("born clean") with multi-harness placement
 python3 skills/rabbit-skills-audit/scripts/scaffold_skill.py my-skill --harness claude-code --scope project
+
+# DeepSeek Harness (DSH): search 176 offline docs (official + community), scaffold skills/plugins/workflows, manage MCP
+python3 skills/rabbit-dsh/scripts/rabbit_dsh.py docs search "cordis tutorial"
+python3 skills/rabbit-dsh/scripts/rabbit_dsh.py scaffold skill ./skills --name my-dsh-skill --type bundle
+python3 skills/rabbit-dsh/scripts/rabbit_dsh.py scaffold plugin ./plugins --name @org/dsh-indexer --service indexer
+python3 skills/rabbit-dsh/scripts/rabbit_dsh.py mcp add github --command npx --args -y @modelcontextprotocol/server-github
 ```
 
 Audits are read-only (AST and regex only, so no target code is ever executed) and exit non-zero in `--strict` mode, ready for CI. Full check catalogs: [`audit-checks.md`](skills/rabbit-skills-audit/references/audit-checks.md) and [`plugin-marketplace-linting.md`](skills/rabbit-plugin-audit/references/plugin-marketplace-linting.md).

@@ -326,6 +326,26 @@ def lint_dsh_skill_directory(target_path: Path, findings: Findings):
     if not found_any:
         findings.add("DSK-01", "error", target_path.name, 1, "no skills found",
                      message=f"No DSH skills (`SKILL.md` or `<name>.md`) found in `{target_path}`.")
+        return
+
+    # DSK-12: identical frontmatter names within one collection shadow each other
+    # (discovery is name-keyed, so the second definition never resolves).
+    seen_names = {}
+    for key, skill_path in discovered_skills.items():
+        skill_file = skill_path if skill_path.is_file() else skill_path / "SKILL.md"
+        text, err = read_text_safe(skill_file)
+        if err or text is None:
+            continue
+        parsed = _fm_parse(text)
+        name = str(parsed.get("meta", {}).get("name", "")).strip()
+        if not name:
+            continue
+        rel_display = f"{key}/SKILL.md" if skill_path.is_dir() else key
+        if name in seen_names:
+            findings.add("DSK-12", "error", rel_display, 1, f"name: {name} (also in {seen_names[name]})",
+                         message=f"Frontmatter name '{name}' is declared twice in this collection ('{seen_names[name]}' and '{key}'); discovery is name-keyed, so one shadows the other.")
+        else:
+            seen_names[name] = key
 
 
 def evaluate_skill_publish_checklist(skill_file: Path, findings: Findings) -> list:
@@ -540,6 +560,22 @@ sk-1234567890abcdef12345678
         root_errs = [x for x in f_root.items if x["severity"] == "error"]
         assert len(root_errs) == 0, f"Skills root collection produced unexpected errors: {root_errs}"
         print("  ✓ Multi-skill collection root test passed")
+
+        # 4b. DSK-12: duplicate frontmatter names inside one collection shadow each other
+        shadow_root = root / "shadowed-root"
+        shadow_root.mkdir()
+        dup_a = shadow_root / "reviewer-a"
+        dup_a.mkdir()
+        with open(dup_a / "SKILL.md", "w") as f:
+            f.write("---\nname: reviewer\ndescription: First reviewer skill in the shadow test collection.\n---\n# A\n")
+        with open(shadow_root / "reviewer-b.md", "w") as f:
+            f.write("---\nname: reviewer\ndescription: Second reviewer skill in the shadow test collection.\n---\n# B\n")
+
+        f_shadow = Findings(shadow_root)
+        lint_dsh_skill_directory(shadow_root, f_shadow)
+        shadow_ids = {x["id"] for x in f_shadow.items}
+        assert "DSK-12" in shadow_ids, f"DSK-12 did not fire on duplicate collection names: {sorted(shadow_ids)}"
+        print("  ✓ DSK-12 collection shadowing test passed")
 
         # 5. Test Pre-Publishing Readiness Checklist
         chk = evaluate_skill_publish_checklist(bundle_dir / "SKILL.md", f_bundle)

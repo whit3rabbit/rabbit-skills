@@ -5,7 +5,7 @@ Audits DeepSeek Harness (DSH) plugins, Cordis patch manifests, tools, event syst
 and agent presets against official architecture standards and safety best practices.
 
 Checks:
-  - DSH-01..DSH-12: Package manifest, Cordis patches, tools, events, personas, secrets.
+  - DSH-01..DSH-13: Package manifest, Cordis patches, tools, events, personas, secrets, Typert.
 
 Standard library only (`argparse`, `json`, `pathlib`, `re`, `sys`).
 Runs standalone or as part of the rabbit-skills suite.

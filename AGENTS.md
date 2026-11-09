@@ -9,9 +9,10 @@ Repository: https://github.com/whit3rabbit/rabbit-skills
 All changes must pass their own audits and self-tests before committing:
 
 ```bash
-# Static audits for both bundled skills:
+# Static audits for bundled skills:
 python3 skills/rabbit-skills-audit/scripts/audit_static.py skills/rabbit-skills-audit --strict
 python3 skills/rabbit-skills-audit/scripts/audit_static.py skills/rabbit-plugin-audit --strict
+python3 skills/rabbit-skills-audit/scripts/audit_static.py skills/rabbit-dsh --strict
 
 # Plugin and marketplace schema validation:
 python3 skills/rabbit-plugin-audit/scripts/audit_plugin.py . --strict
@@ -24,6 +25,8 @@ python3 skills/rabbit-skills-audit/scripts/scaffold_skill.py --self-test
 python3 skills/rabbit-plugin-audit/scripts/audit_plugin.py --self-test
 python3 skills/rabbit-plugin-audit/scripts/audit_dsh.py --self-test
 python3 skills/rabbit-plugin-audit/scripts/scaffold_plugin.py --self-test
+python3 skills/rabbit-dsh/scripts/rabbit_dsh.py --self-test
+python3 skills/rabbit-dsh/scripts/audit_dsh_artifacts.py --self-test
 ```
 
 ## Architecture & Layout
@@ -47,12 +50,26 @@ One home per fact. Each skill under `skills/<name>/` is completely self-containe
 - **`skills/rabbit-plugin-audit/`**: Plugin and marketplace manifest linter and scaffolder.
   - `SKILL.md`: Plugin and marketplace workflow instructions.
   - `scripts/audit_plugin.py`: Static linter for Claude Code and Codex plugins/catalogs (PL-01..PL-18, MP-01..MP-15).
-  - `scripts/audit_dsh.py`: Dedicated static linter for DeepSeek Harness (Cordis) plugins, tools, and presets (DSH-01..DSH-12).
+  - `scripts/audit_dsh.py`: Dedicated static linter for DeepSeek Harness (Cordis) plugins, tools, and presets (DSH-01..DSH-13).
   - `scripts/scaffold_plugin.py`: Scaffolder for plugin manifests, lifecycle hooks, MCP configurations, Cordis bundles, and catalogs.
   - `references/claude-plugins.md`: Complete guide to Claude Code plugins, components, evals, and cost profiling.
   - `references/codex-plugins.md`: Complete guide to OpenAI Codex & ChatGPT portable plugins.
   - `references/deepseek-harness-plugins.md`: Complete guide to DeepSeek Harness plugins, Cordis patches, tools, and events.
   - `references/plugin-marketplace-linting.md`: Check specifications for plugins, marketplaces, and DeepSeek Harness bundles.
+- **`skills/rabbit-dsh/`**: DeepSeek Harness (DSH) unified studio, scaffolder, MCP manager, and offline documentation companion.
+  - `SKILL.md`: DeepSeek Harness progressive disclosure manual (<500 lines).
+  - `scripts/rabbit_dsh.py`: CLI powerhouse for scaffolding (skills, Cordis plugins, workflows with official `WorkflowMeta`), MCP server management (JSON managed patches, `--env-ref` secret refs), generic plugin patch rows (YAML managed patches), configuration editing, offline doc search plus the `docs map` concept map, and artifact auditing.
+  - `scripts/audit_dsh_artifacts.py`: Deep static linter for DSH runtime artifacts, patches/presets, workflow definitions, settings, skill manifests, credential files, and session JSONL logs (DA-01..DA-21). Every fix hint cites an offline doc so a cold agent can teach itself.
+  - `scripts/scrape_docs.py`: Deterministic scraper and converter for deepseekdocs.com offline documentation.
+  - `references/artifact-checks.md`: Check catalog for `audit_dsh_artifacts.py` (DA-01..DA-21, 1:1 with `CHECK_INFO`) plus the known version-skew list.
+  - `references/quick-reference.md`: Cheat sheet for DSH skills, config commands, and precedence.
+  - `references/workflow-ralph.md`: Multi-agent orchestration workflows and Ralph iterative goal loops.
+  - `references/plugin-cordis.md`: Cordis microkernel plugin architecture, services, and tool registration.
+  - `references/mcp-integration.md`: Model Context Protocol configuration, stdio/SSE transports, and tool prefixing.
+  - `references/docs/`: 176 clean, offline-ready Markdown documents (98 official docs from deepseek-harness.github.io, including pinned extensions and testing notes, and 78 community docs from deepseekdocs.com).
+  - `references/official-reference-guide.md`: Offline reference index routing authoring tasks to official docs and pinned notes.
+  - `examples/`: Two worked examples (`review-sql-migration` skill, `schema-find-refs` Host tool bundle) plus `verification.md` discovery, invocation, and build/load/call/unload walkthroughs.
+  - `evals/`: 6 evaluation scenarios scoring observed tool calls and artifacts, with doc-read and retry efficiency targets.
 
 ## Invariants & Rules for Agents
 

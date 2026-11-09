@@ -31,6 +31,7 @@ htmlcov/
 !.claude/
 !.claude-plugin/
 scratch/
+.zcode/
 
 # Audit output
 *-audit.md

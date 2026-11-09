@@ -1,7 +1,7 @@
 ---
 name: rabbit-skills-audit
 version: 1.1.0
-description: Scaffold, audit, lint, and deploy agent skills against Anthropic's 45 best practices across 31 harnesses (Claude Code, DeepSeek Harness, Cursor, Antigravity). Use when creating, auditing, linting, scoring, or placing skills across harnesses.
+description: Scaffold, audit, lint, and place agent skills across 31 harnesses. Use when auditing, linting, or deploying skills across harnesses.
 ---
 
 # Auditing and Improving Agent Skills
