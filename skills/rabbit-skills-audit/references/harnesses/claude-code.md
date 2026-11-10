@@ -49,8 +49,8 @@ Reference guide for skill discovery, directory structure, configuration preceden
 Claude Code searches multiple directory scopes to discover skills.
 
 ### Project Skills (Repository Scope)
-- **Primary Path**: `<workspace-root>/.claude/skills/<skill-name>/SKILL.md`
-- **Subdirectory / Monorepo Path**: `<workspace-root>/<subdir>/.claude/skills/<skill-name>/SKILL.md`
+- **Primary Path**: `{workspace-root}/.claude/skills/<skill-name>/SKILL.md`
+- **Subdirectory / Monorepo Path**: `{workspace-root}/<subdir>/.claude/skills/<skill-name>/SKILL.md`
 - **Behavior**: Scanned from the current working directory upward to the repository root. Subdirectory skills load lazily when Claude touches files within `<subdir>`. Intended for version-controlled, team-shared skills.
 
 ### Personal Skills (User Scope)
@@ -73,7 +73,7 @@ Claude Code separates configuration and permissions into tiered configuration fi
 
 - **Global User Settings (`~/.claude.json` / `~/.claude/settings.json`)**:
   Stores user-wide preferences, active default models, telemetry options, and user-level approved tools and permission rules.
-- **Project Settings (`<workspace-root>/.claude/settings.json` or `.claude.json`)**:
+- **Project Settings (`{workspace-root}/.claude/settings.json` or `.claude.json`)**:
   Stores team-level configurations, project-specific permission rules, approved MCP servers, and repository-wide tool allowlists and denylists.
 - **Instruction Memory (`CLAUDE.md`)**:
   Placed at the project root or in subdirectories. Contains coding guidelines, architectural summaries, and standing instructions loaded into session context at startup.

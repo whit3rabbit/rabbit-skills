@@ -44,9 +44,9 @@ Reference guide for skill discovery, directory layout, configuration precedence,
 Kode discovers skills across project-level directories and global user configurations:
 
 ### Project-Level Skills (Workspace)
-- **Primary Project Path**: `<project-root>/.kode/skills/<skill-name>/SKILL.md`
-- **Standard Agent Path**: `<project-root>/.agents/skills/<skill-name>/SKILL.md`
-- **Legacy Compatibility Paths**: `<project-root>/.claude/skills/<skill-name>/SKILL.md`, `<project-root>/.claude/commands/<skill-name>/SKILL.md`
+- **Primary Project Path**: `{project-root}/.kode/skills/<skill-name>/SKILL.md`
+- **Standard Agent Path**: `{project-root}/.agents/skills/<skill-name>/SKILL.md`
+- **Legacy Compatibility Paths**: `{project-root}/.claude/skills/<skill-name>/SKILL.md`, `{project-root}/.claude/commands/<skill-name>/SKILL.md`
 
 Project skills are tracked in version control and shared across all repository contributors.
 
@@ -64,8 +64,8 @@ Kode stores project settings and user-wide agent configurations in the following
 
 | Configuration Scope | Path | Purpose |
 |---|---|---|
-| Project Settings | `<project-root>/.kode/config.json` | Project-specific overrides, enabled plugins, and tool policies. |
-| Project Workspace Directory | `<project-root>/.kode/` | Project state, local marketplace plugins, and project skills. |
+| Project Settings | `{project-root}/.kode/config.json` | Project-specific overrides, enabled plugins, and tool policies. |
+| Project Workspace Directory | `{project-root}/.kode/` | Project state, local marketplace plugins, and project skills. |
 | User Settings | `~/.kode/config.json` | Global settings, default model preferences, and telemetry options. |
 | User State Directory | `~/.kode/` | Global marketplaces registry, installed user plugins, and global skills. |
 | Marketplace Manifest | `.kode-plugin/marketplace.json` | Repository-level catalog defining installable skill packs and plugins. |

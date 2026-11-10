@@ -54,7 +54,7 @@ Qwen Code discovers skills across workspace, user, extension, and bundled scopes
 | **Learned / Auto-Skills** | `.qwen/skills/learned-skill-*/` | `.qwen/skills/auto-skill-*/` | Distilled via `/learn` or Auto Skill generator. Archived to `.qwen/archived-skills/`. |
 | **User (Global)** | `~/.qwen/skills/<skill-name>/` | `~/.agents/skills/<skill-name>/` | Personal skills available across all projects. `~/.qwen/skills/` wins on collision. |
 | **Custom Directories** | Configured in `skills.directories` | None | Additional filesystem paths loaded as personal skills (e.g., `["~/.claude/skills"]`). |
-| **Extension Skills** | `<extension-root>/skills/` | None | Skills packaged in installed extensions, registered as `<extensionName>:<skill-name>`. |
+| **Extension Skills** | `{extension-root}/skills/` | None | Skills packaged in installed extensions, registered as `<extensionName>:<skill-name>`. |
 | **Bundled Skills** | Internal binary assets | None | Built-in skills packaged with Qwen Code. |
 
 ---

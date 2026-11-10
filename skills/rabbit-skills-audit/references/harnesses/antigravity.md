@@ -44,8 +44,8 @@ Reference guide for skill discovery, directory structure, configuration preceden
 Antigravity searches multiple directory scopes to discover skills.
 
 ### Workspace Skills (Project-Specific)
-- **Primary Path**: `<workspace-root>/.agents/skills/<skill-name>/SKILL.md`
-- **Fallback Paths**: `<workspace-root>/.agent/skills/`, `<workspace-root>/_agents/skills/`
+- **Primary Path**: `{workspace-root}/.agents/skills/<skill-name>/SKILL.md`
+- **Fallback Paths**: `{workspace-root}/.agent/skills/`, `{workspace-root}/_agents/skills/`
 - **Traversal**: Scanned upward from the current working directory to the repository root. Suitable for version-controlled, team-shared skills.
 
 ### Global Skills (User-Wide)
@@ -66,8 +66,8 @@ Antigravity separates workspace rules, project settings, and user-level defaults
 | Location | Path | Scope | Purpose |
 |---|---|---|---|
 | Project Rules | `AGENTS.md`, `GEMINI.md` | Workspace | High-priority project instructions loaded into prompt context. |
-| Granular Rules | `<workspace-root>/.agents/rules/*.md` | Workspace | Topic-specific rule files traversed hierarchically. |
-| Workspace Config | `<workspace-root>/.agents/` | Workspace | Project skill configurations and custom subagent definitions. |
+| Granular Rules | `{workspace-root}/.agents/rules/*.md` | Workspace | Topic-specific rule files traversed hierarchically. |
+| Workspace Config | `{workspace-root}/.agents/` | Workspace | Project skill configurations and custom subagent definitions. |
 | User Configuration | `~/.gemini/config/` | Machine / User | User-wide configurations, `mcp_config.json`, and plugin installations. |
 | Runtime App Data | `~/.gemini/antigravity/` | Machine / User | Internal conversation transcripts, logs, and artifacts. |
 
@@ -77,7 +77,7 @@ Antigravity separates workspace rules, project settings, and user-level defaults
 
 When skills share identical `name` values, Antigravity resolves collisions in strict priority order (highest to lowest):
 
-1. **Workspace Project**: `<workspace-root>/.agents/skills/` discovered by ascending from CWD to repository root.
+1. **Workspace Project**: `{workspace-root}/.agents/skills/` discovered by ascending from CWD to repository root.
 2. **Workspace Declared**: Customizations explicitly listed in workspace `skills.json` or `plugins.json`.
 3. **Global User Discovery**: `~/.gemini/config/skills/` (and CLI-specific directories).
 4. **Built-in Skills**: Bundled runtime skills in `~/.gemini/antigravity/builtin/skills/`.

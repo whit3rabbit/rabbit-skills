@@ -45,8 +45,8 @@ Reference guide for skill discovery, directory structure, configuration preceden
 Replit discovers skills across project-level (Repl) and workspace-level (team/global) scopes.
 
 ### Project Skills (Repl Scope)
-- **Primary Path**: `<repl-root>/.agents/skills/<skill-name>/SKILL.md`
-- **Fallback / Legacy Path**: `<repl-root>/.replit/skills/<skill-name>/SKILL.md`
+- **Primary Path**: `{repl-root}/.agents/skills/<skill-name>/SKILL.md`
+- **Fallback / Legacy Path**: `{repl-root}/.replit/skills/<skill-name>/SKILL.md`
 - **Behavior**: Scanned within the active Repl project. Stored alongside application files and committed to git or Repl Checkpoints, ensuring all project collaborators share identical skills.
 
 ### Workspace Skills (Team Library Scope)
@@ -71,8 +71,8 @@ Replit stores project configuration, environment variables, and agent guidelines
 | Agent Instructions | `replit.md` | Repl Project | High-priority project instructions and architectural guidelines loaded into agent prompt context. |
 | Project Configuration | `.replit` | Repl Project | TOML configuration defining entrypoints, run commands, nix channels, workflows, and ports. |
 | System Packages | `replit.nix` | Repl Project | Nix configuration declaring binary dependencies, runtime toolchains, and system packages. |
-| Project Skills | `<repl-root>/.agents/skills/` | Repl Project | Project-specific skills versioned in repository files. |
-| Modular Rules | `<repl-root>/.agents/rules/*.md` | Repl Project | Contextual coding rules and domain conventions. |
+| Project Skills | `{repl-root}/.agents/skills/` | Repl Project | Project-specific skills versioned in repository files. |
+| Modular Rules | `{repl-root}/.agents/rules/*.md` | Repl Project | Contextual coding rules and domain conventions. |
 | Project Secrets | Replit Secrets Tool | Repl Project | Encrypted key-value credentials injected as environment variables without writing to disk. |
 | Global Skills | `~/.config/agents/skills/` | Machine / User | User-wide skills shared across local environments and CLI runs. |
 

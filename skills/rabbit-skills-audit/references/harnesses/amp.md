@@ -43,8 +43,8 @@ Reference guide for skill discovery, directory structure, configuration preceden
 Amp discovers skills across repository and machine scopes.
 
 ### Project Skills (Repository Scope)
-- **Primary Path**: `<workspace-root>/.agents/skills/<skill-name>/SKILL.md`
-- **Fallback / Compatibility Path**: `<workspace-root>/.claude/skills/<skill-name>/SKILL.md`
+- **Primary Path**: `{workspace-root}/.agents/skills/<skill-name>/SKILL.md`
+- **Fallback / Compatibility Path**: `{workspace-root}/.claude/skills/<skill-name>/SKILL.md`
 - **Behavior**: Scanned upward from the current working directory to the project repository root. These skills are version-controlled and shared across teams.
 
 ### Global Skills (Machine Scope)
@@ -61,8 +61,8 @@ Amp organizes workspace rules, skill directories, and personal defaults across d
 | Location | Path | Scope | Purpose |
 |---|---|---|---|
 | Project Rules | `AGENTS.md` | Workspace | High-level instructions loaded into thread context for the repository. |
-| Project Skills | `<workspace-root>/.agents/skills/` | Workspace | Team-shared skills tracked in version control. |
-| Project Settings | `<workspace-root>/.amp/` or `amp.json` | Workspace | Project-specific configuration, runner options, and environment rules. |
+| Project Skills | `{workspace-root}/.agents/skills/` | Workspace | Team-shared skills tracked in version control. |
+| Project Settings | `{workspace-root}/.amp/` or `amp.json` | Workspace | Project-specific configuration, runner options, and environment rules. |
 | Global Settings | `~/.config/amp/settings.json` (or `~/.amp/`) | Machine / User | User-wide configuration, credentials, and default model preferences. |
 | Global Skills | `~/.config/agents/skills/` (or `~/.agents/skills/`) | Machine / User | User-specific skills accessible across all workspaces. |
 
@@ -73,7 +73,7 @@ Amp organizes workspace rules, skill directories, and personal defaults across d
 When skills share identical `name` attributes, Amp resolves collisions in priority order (highest to lowest):
 
 1. **Machine-level Personal Skills**: `~/.config/agents/skills/` and `~/.agents/skills/` (personal skills take precedence, allowing local developer customizations to override project defaults).
-2. **Project-level Skills**: `<workspace-root>/.agents/skills/` and fallback `.claude/skills/` found by ascending from the working directory to the repository root.
+2. **Project-level Skills**: `{workspace-root}/.agents/skills/` and fallback `.claude/skills/` found by ascending from the working directory to the repository root.
 3. **Official / Built-in Skills**: Bundled system skills provided with the Amp runtime.
 
 ---

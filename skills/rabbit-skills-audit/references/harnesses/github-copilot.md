@@ -45,10 +45,10 @@ GitHub Copilot searches defined project and personal paths for skill folders con
 
 ### Project Skills (Repository Scope)
 Project skills live inside the repository root and apply to all contributors working within that codebase:
-- **Primary Path**: `<repo-root>/.agents/skills/<skill-name>/SKILL.md`
+- **Primary Path**: `{repo-root}/.agents/skills/<skill-name>/SKILL.md`
 - **Supported Alternates**:
-  - `<repo-root>/.github/skills/<skill-name>/SKILL.md`
-  - `<repo-root>/.claude/skills/<skill-name>/SKILL.md`
+  - `{repo-root}/.github/skills/<skill-name>/SKILL.md`
+  - `{repo-root}/.claude/skills/<skill-name>/SKILL.md`
 
 ### User / Global Skills (Personal Scope)
 Personal skills apply across local projects for a single developer:
@@ -66,8 +66,8 @@ GitHub Copilot centralizes custom instructions, tool enablement, and workspace b
 
 | Location | Path | Scope | Purpose |
 |---|---|---|---|
-| Repository Instructions | `<repo-root>/.github/copilot-instructions.md` | Repository | Natural-language instructions loaded into prompt context for every Copilot interaction in the repo. |
-| VS Code Settings | `<repo-root>/.vscode/settings.json` | Workspace | Workspace preferences such as `github.copilot.chat...` settings and custom instructions paths. |
+| Repository Instructions | `{repo-root}/.github/copilot-instructions.md` | Repository | Natural-language instructions loaded into prompt context for every Copilot interaction in the repo. |
+| VS Code Settings | `{repo-root}/.vscode/settings.json` | Workspace | Workspace preferences such as `github.copilot.chat...` settings and custom instructions paths. |
 | User Settings | `~/.config/github-copilot/` or IDE user settings | User | Machine-wide developer preferences and tool permissions. |
 | Dotfiles Repository | `<dotfiles-repo>/.copilot/skills/` | Cloud Sessions | Personal skills synchronized to cloud environments and remote agent containers. |
 
@@ -77,7 +77,7 @@ GitHub Copilot centralizes custom instructions, tool enablement, and workspace b
 
 When multiple skills share identical `name` values, GitHub Copilot resolves collisions in priority order (highest to lowest):
 
-1. **Repository / Project Skills**: `<repo-root>/.agents/skills/` (or `.github/skills/`, `.claude/skills/`). Project-level definitions override user-level definitions.
+1. **Repository / Project Skills**: `{repo-root}/.agents/skills/` (or `.github/skills/`, `.claude/skills/`). Project-level definitions override user-level definitions.
 2. **User / Global Skills**: `~/.copilot/skills/` (or `~/.agents/skills/`). Loaded when no project skill overrides the name.
 3. **Dotfiles Cloud Skills**: `.copilot/skills/` synced into remote cloud sandboxes.
 

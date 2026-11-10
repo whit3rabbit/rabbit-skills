@@ -41,7 +41,7 @@ CodeBuddy is built on a VS Code-compatible architecture and stores configuration
 
 ### Directory Locations
 
-- **Project Configuration**: `<workspace-root>/.codebuddy/`
+- **Project Configuration**: `{workspace-root}/.codebuddy/`
   - `.codebuddy/settings.json` — Workspace-specific editor settings
   - `.codebuddy/rules/` — Workspace agent instructions and prompt rules
   - `.codebuddy/skills/` — Workspace skills directory

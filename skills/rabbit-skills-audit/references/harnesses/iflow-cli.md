@@ -45,7 +45,7 @@ Reference guide for skill discovery, directory structure, configuration preceden
 iFlow CLI searches two scopes for skills:
 
 ### Project-Level Skills (Workspace)
-- **Path**: `<project-root>/.iflow/skills/<skill-name>/SKILL.md`
+- **Path**: `{project-root}/.iflow/skills/<skill-name>/SKILL.md`
 - **Scope**: Local to the current project workspace. Ideal for version control, project-specific dependencies, and team workflows.
 
 ### Global-Level Skills (User-Wide)
@@ -60,8 +60,8 @@ iFlow CLI stores configuration, workflow parameters, and agent runtime settings 
 
 | Location | Path | Scope | Purpose |
 |---|---|---|---|
-| Project Configuration | `<project-root>/.iflow/config.yaml` | Workspace | Project-specific agent parameters, active workflow overrides, and skill settings. |
-| Project Skills | `<project-root>/.iflow/skills/` | Workspace | Workspace-scoped skill packages. |
+| Project Configuration | `{project-root}/.iflow/config.yaml` | Workspace | Project-specific agent parameters, active workflow overrides, and skill settings. |
+| Project Skills | `{project-root}/.iflow/skills/` | Workspace | Workspace-scoped skill packages. |
 | Global Configuration | `~/.iflow/config.yaml` | Machine / User | Default user preferences, model settings, and CLI options. |
 | Global State & Auth | `~/.iflow/` | Machine / User | User authentication tokens, session logs, cached marketplace metadata. |
 | Global Skills | `~/.iflow/skills/` | Machine / User | Universally available user skill packages. |

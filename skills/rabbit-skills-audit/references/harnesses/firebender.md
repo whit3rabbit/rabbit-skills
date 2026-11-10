@@ -45,8 +45,8 @@ Reference guide for skill discovery, directory structure, multi-agent dispatch, 
 Firebender searches both workspace and global user scopes, with support for cross-agent compatibility directories.
 
 ### Workspace Skills (Team & Project-Specific)
-- **Standard Shared Path**: `<workspace-root>/.agents/skills/<skill-name>/SKILL.md`
-- **Native Team Path**: `<workspace-root>/.firebender/skills/<skill-name>/SKILL.md`
+- **Standard Shared Path**: `{workspace-root}/.agents/skills/<skill-name>/SKILL.md`
+- **Native Team Path**: `{workspace-root}/.firebender/skills/<skill-name>/SKILL.md`
 - **Scope**: Committed to version control; automatically available to all team members collaborating in the repository.
 
 ### Global Skills (User-Wide)
@@ -67,9 +67,9 @@ Firebender maintains distinct scopes for workspace rules, multi-agent orchestrat
 
 | Location | Path | Scope | Purpose |
 |---|---|---|---|
-| Workspace Rules | `<workspace-root>/.firebender/rules/`, `AGENTS.md` | Workspace | Coding standards, architecture guidelines, and system instructions. |
-| Team Skills | `<workspace-root>/.agents/skills/`, `.firebender/skills/` | Workspace | Team-shared executable workflows committed to version control. |
-| Workspace Settings | `<workspace-root>/.firebender/settings.json` | Workspace | Project-level subagent permissions and environment settings. |
+| Workspace Rules | `{workspace-root}/.firebender/rules/`, `AGENTS.md` | Workspace | Coding standards, architecture guidelines, and system instructions. |
+| Team Skills | `{workspace-root}/.agents/skills/`, `.firebender/skills/` | Workspace | Team-shared executable workflows committed to version control. |
+| Workspace Settings | `{workspace-root}/.firebender/settings.json` | Workspace | Project-level subagent permissions and environment settings. |
 | User Configuration | `~/.firebender/` | Machine / User | User-wide configuration, model preferences, and API credentials. |
 | User Skills | `~/.firebender/skills/` | Machine / User | Personal workflows accessible across all workspaces. |
 
@@ -79,7 +79,7 @@ Firebender maintains distinct scopes for workspace rules, multi-agent orchestrat
 
 When skills share the same `name` attribute across multiple search paths, Firebender resolves collisions in strict hierarchical order:
 
-1. **Workspace Team Skills**: `<workspace-root>/.agents/skills/` and `<workspace-root>/.firebender/skills/` (highest priority).
+1. **Workspace Team Skills**: `{workspace-root}/.agents/skills/` and `{workspace-root}/.firebender/skills/` (highest priority).
 2. **Primary User Skills**: `~/.firebender/skills/`.
 3. **Generic User Skills**: `~/.agents/skills/`.
 4. **Third-Party Compatibility Directories**: `~/.claude/skills/`, `~/.cursor/skills/`, `~/.codex/skills/`, `~/.goose/skills/` (lowest priority).

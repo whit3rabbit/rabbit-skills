@@ -30,8 +30,8 @@ Roo Code discovers skills across project-scoped and user-scoped (global) roots, 
 
 | Scope | Roo-Specific Path (Higher Priority) | Cross-Agent Shared Path |
 |---|---|---|
-| **Project (Workspace)** | `<project-root>/.roo/skills/<skill-name>/` | `<project-root>/.agents/skills/<skill-name>/` |
-| **Project Mode-Specific** | `<project-root>/.roo/skills-<modeSlug>/<skill-name>/` | `<project-root>/.agents/skills-<modeSlug>/<skill-name>/` |
+| **Project (Workspace)** | `{project-root}/.roo/skills/<skill-name>/` | `{project-root}/.agents/skills/<skill-name>/` |
+| **Project Mode-Specific** | `{project-root}/.roo/skills-<modeSlug>/<skill-name>/` | `{project-root}/.agents/skills-<modeSlug>/<skill-name>/` |
 | **Global (User)** | `~/.roo/skills/<skill-name>/` | `~/.agents/skills/<skill-name>/` |
 | **Global Mode-Specific** | `~/.roo/skills-<modeSlug>/<skill-name>/` | `~/.agents/skills-<modeSlug>/<skill-name>/` |
 
@@ -46,10 +46,10 @@ Roo Code configuration files govern modes, permissions, and tool execution bound
 
 | Scope | Location | Format & Purpose |
 |---|---|---|
-| **Custom Modes (Project)** | `<project-root>/.roomodes` | JSON/YAML defining custom modes, role descriptions, and tool restrictions. |
-| **Custom Instructions (Project)** | `<project-root>/.roorules`, `.clinerules` | Markdown instructions applied across all prompts. |
-| **Mode Rules (Project)** | `<project-root>/.roo/rules-<modeSlug>/`, `.clinerules-<modeSlug>` | Markdown rules loaded only in the targeted mode. |
-| **File Exclusions** | `<project-root>/.rooignore` | Glob patterns that prevent Roo Code from reading or modifying matching files. |
+| **Custom Modes (Project)** | `{project-root}/.roomodes` | JSON/YAML defining custom modes, role descriptions, and tool restrictions. |
+| **Custom Instructions (Project)** | `{project-root}/.roorules`, `.clinerules` | Markdown instructions applied across all prompts. |
+| **Mode Rules (Project)** | `{project-root}/.roo/rules-<modeSlug>/`, `.clinerules-<modeSlug>` | Markdown rules loaded only in the targeted mode. |
+| **File Exclusions** | `{project-root}/.rooignore` | Glob patterns that prevent Roo Code from reading or modifying matching files. |
 | **Global Settings & Modes** | VS Code global extension storage | User profiles, API providers, and global custom modes across workspaces. |
 
 ## Discovery & Precedence

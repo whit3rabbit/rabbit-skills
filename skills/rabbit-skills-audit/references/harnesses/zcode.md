@@ -48,8 +48,8 @@ ZCode scans project-local and user-global paths for skill definitions.
 
 ### Project Skills (Workspace-Level)
 
-- **Override Path**: `<workspace-root>/.zcode/skills/<skill-name>/SKILL.md`
-- **Standard Path**: `<workspace-root>/.agents/skills/<skill-name>/SKILL.md`
+- **Override Path**: `{workspace-root}/.zcode/skills/<skill-name>/SKILL.md`
+- **Standard Path**: `{workspace-root}/.agents/skills/<skill-name>/SKILL.md`
 
 Project skills are version-controlled alongside repository code. When a skill exists in both project locations with the same `name`, `.zcode/skills/` takes precedence over `.agents/skills/`.
 
@@ -68,12 +68,12 @@ ZCode stores agent configuration, environment settings, and rules across dedicat
 
 | Location | Path | Scope | Purpose |
 |---|---|---|---|
-| Project Rules | `<workspace-root>/AGENTS.md` | Workspace | High-priority project instructions loaded into agent context. |
-| Project Settings | `<workspace-root>/.zcode/settings.json` | Workspace | Workspace-specific agent configurations, model selections, and tool overrides. |
-| Workspace Skills | `<workspace-root>/.zcode/skills/` | Workspace | Repository-specific skill overrides. |
+| Project Rules | `{workspace-root}/AGENTS.md` | Workspace | High-priority project instructions loaded into agent context. |
+| Project Settings | `{workspace-root}/.zcode/settings.json` | Workspace | Workspace-specific agent configurations, model selections, and tool overrides. |
+| Workspace Skills | `{workspace-root}/.zcode/skills/` | Workspace | Repository-specific skill overrides. |
 | Global Settings | `~/.zcode/settings.json` | Global / User | Machine-wide preferences, telemetry toggles, and default model flags. |
 | Global Skills | `~/.zcode/skills/` | Global / User | Personal workflows available across all projects. |
-| MCP Servers | `<workspace-root>/.zcode/mcp.json` or `~/.zcode/mcp.json` | Workspace / Global | Configuration for Model Context Protocol servers and connected tools. |
+| MCP Servers | `{workspace-root}/.zcode/mcp.json` or `~/.zcode/mcp.json` | Workspace / Global | Configuration for Model Context Protocol servers and connected tools. |
 
 ---
 
@@ -81,8 +81,8 @@ ZCode stores agent configuration, environment settings, and rules across dedicat
 
 When multiple skills share the same `name` property in their frontmatter, ZCode resolves collisions in strict priority order (highest to lowest):
 
-1. **Project Override**: `<workspace-root>/.zcode/skills/<skill-name>/`
-2. **Project Standard**: `<workspace-root>/.agents/skills/<skill-name>/`
+1. **Project Override**: `{workspace-root}/.zcode/skills/<skill-name>/`
+2. **Project Standard**: `{workspace-root}/.agents/skills/<skill-name>/`
 3. **User Override**: `~/.zcode/skills/<skill-name>/`
 4. **User Standard**: `~/.agents/skills/<skill-name>/`
 

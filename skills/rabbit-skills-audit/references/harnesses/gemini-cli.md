@@ -27,7 +27,7 @@ Gemini CLI discovers skills across workspace, global, extension, and built-in ti
 | **Workspace (Fallback)** | `.gemini/skills/<skill-name>/` | Secondary workspace location |
 | **User (Global)** | `~/.gemini/skills/<skill-name>/` | Primary global directory |
 | **User (Global Alias)** | `~/.agents/skills/<skill-name>/` | Cross-tool interoperable alias |
-| **Extensions** | `<extension-root>/skills/<skill-name>/` | Packaged within installed Gemini CLI extensions |
+| **Extensions** | `{extension-root}/skills/<skill-name>/` | Packaged within installed Gemini CLI extensions |
 | **Built-in** | Bundled internal skills | Shipped directly with the CLI runtime |
 
 ### Path Resolution

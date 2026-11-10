@@ -46,8 +46,8 @@ Reference guide for skill discovery, directory layout, configuration precedence,
 Posit Assistant resolves skills across project, user, and built-in scopes.
 
 ### Project Skills (Workspace-Scoped)
-- **Primary Path**: `<project-root>/.posit/assistant/skills/<skill-name>/SKILL.md`
-- **Shared Agent Skills Path**: `<project-root>/.agents/skills/<skill-name>/SKILL.md`
+- **Primary Path**: `{project-root}/.posit/assistant/skills/<skill-name>/SKILL.md`
+- **Shared Agent Skills Path**: `{project-root}/.agents/skills/<skill-name>/SKILL.md`
 - **Scope**: Scoped to the current project or workspace root; suitable for team-shared repository assets.
 
 ### User Skills (Global)
@@ -73,9 +73,9 @@ Configurations and data science tool settings reside in `.posit/` and user confi
 
 | Scope | Location | Purpose |
 |---|---|---|
-| Project Settings | `<project-root>/.posit/assistant/settings.json` | Project-specific overrides, model selections, and custom `skills.paths`. |
-| Project Data Science Config | `<project-root>/.posit/` | Posit Assistant project-level state and data science tool configurations. |
-| IDE / Editor Settings | `<project-root>/.positron/settings.json` | Positron IDE editor preferences and language runtime environments. |
+| Project Settings | `{project-root}/.posit/assistant/settings.json` | Project-specific overrides, model selections, and custom `skills.paths`. |
+| Project Data Science Config | `{project-root}/.posit/` | Posit Assistant project-level state and data science tool configurations. |
+| IDE / Editor Settings | `{project-root}/.positron/settings.json` | Positron IDE editor preferences and language runtime environments. |
 | Global Settings | `~/.posit/assistant/settings.json` | User-wide preferences, fallback models, and default search paths. |
 | Global Providers | `~/.posit/assistant/providers.json` | LLM provider endpoints and credentials. |
 

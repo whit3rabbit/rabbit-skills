@@ -47,7 +47,7 @@ Reference guide for skill discovery, directory structure, configuration preceden
 Qoder searches project-level and global user directories for skills.
 
 ### Project Skills (Workspace-Scoped)
-- **Path**: `<workspace-root>/.qoder/skills/<skill-name>/SKILL.md`
+- **Path**: `{workspace-root}/.qoder/skills/<skill-name>/SKILL.md`
 - **Scope**: Current project only. Suitable for team workflows, project-specific knowledge, and version-controlled scripts.
 
 ### Global Skills (User-Scoped)
@@ -64,9 +64,9 @@ Qoder stores CLI settings and configurations across user-level and project-level
 | Scope | Path | Purpose |
 |---|---|---|
 | User Configuration | `~/.qoder/config.json` (or `~/.qoder-cn/config.json`) | Global settings, authentication, default models, and global tool configurations. |
-| Project Configuration | `<workspace-root>/.qoder/config.json` | Project-specific overrides, workspace permissions, and local tool settings. |
+| Project Configuration | `{workspace-root}/.qoder/config.json` | Project-specific overrides, workspace permissions, and local tool settings. |
 | User Skills | `~/.qoder/skills/` (or `~/.qoder-cn/skills/`) | User-wide custom skill definitions. |
-| Project Skills | `<workspace-root>/.qoder/skills/` | Workspace-level custom skill definitions. |
+| Project Skills | `{workspace-root}/.qoder/skills/` | Workspace-level custom skill definitions. |
 
 ---
 
@@ -75,7 +75,7 @@ Qoder stores CLI settings and configurations across user-level and project-level
 At startup, Qoder CLI scans available skill directories and loads each skill's `name` and `description` into model memory:
 
 1. **Discovery Order**:
-   - Project directory: `<workspace-root>/.qoder/skills/`
+   - Project directory: `{workspace-root}/.qoder/skills/`
    - User configuration: `~/.qoder/skills/` (or `~/.qoder-cn/skills/` for Qoder CN)
 
 2. **Precedence**:

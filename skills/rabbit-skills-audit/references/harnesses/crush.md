@@ -47,11 +47,11 @@ Crush discovers skills across project-level directories, global user paths, and 
 
 ### Project Skills (Repository Scope)
 
-- **Primary Path**: `<project-root>/.crush/skills/<skill-name>/SKILL.md`
+- **Primary Path**: `{project-root}/.crush/skills/<skill-name>/SKILL.md`
 - **Compatibility Paths**:
-  - `<project-root>/.agents/skills/<skill-name>/SKILL.md`
-  - `<project-root>/.claude/skills/<skill-name>/SKILL.md`
-  - `<project-root>/.cursor/skills/<skill-name>/SKILL.md`
+  - `{project-root}/.agents/skills/<skill-name>/SKILL.md`
+  - `{project-root}/.claude/skills/<skill-name>/SKILL.md`
+  - `{project-root}/.cursor/skills/<skill-name>/SKILL.md`
 - **Configured Paths**: Custom project-relative paths added via `option skill-path` in `crushrc`.
 
 ### Global Skills (User Scope)
@@ -99,7 +99,7 @@ Crush supports configuration through Bash-based script files (`crushrc`) and dec
 
 When skills share identical `name` values across multiple locations, Crush resolves collisions with strict precedence:
 
-1. **Project Directory**: Local skills in `<project-root>/.crush/skills/` (and compatibility paths) take precedence over all global locations.
+1. **Project Directory**: Local skills in `{project-root}/.crush/skills/` (and compatibility paths) take precedence over all global locations.
 2. **Explicit Custom Paths**: Directories configured via `option skill-path` in `crushrc` or `options.skills_paths` in `crush.json`.
 3. **Environment Override**: Directory path set in `$CRUSH_SKILLS_DIR`.
 4. **Global User Directory**: `~/.config/crush/skills/` (or `$XDG_CONFIG_HOME/crush/skills/`).
