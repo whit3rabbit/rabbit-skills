@@ -1,0 +1,41 @@
+{
+  "name": "startup-screen-template",
+  "version": "0.1.0",
+  "description": "Bare-bones DeepSeek Harness startup screen template: Host index injection, three swappable splash screens (wordmark, boot log, status steps), a settings page, and a no-build handwritten client bundle.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "startup",
+    "splash",
+    "template"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "preview",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "react"
+      ]
+    }
+  },
+  "license": "MIT"
+}

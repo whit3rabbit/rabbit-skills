@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+  startup-screen-template — standalone preview
+  Open this file in any browser (no DSH required). It reproduces exactly what
+  the Host half injects into index.html — boot layer, config object, bootstrap
+  guard, then screens.js + widget.js — plus a toolbar for switching screens.
+============================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>startup-screen-template preview</title>
+<link rel="stylesheet" href="../lib/widget.css">
+<style>
+  /* Mirror of the critical CSS block the Host injects inline. */
+  html.sst-lock, html.sst-lock body { overflow: hidden !important; }
+  #startup-screen-template-root.sst-boot {
+    position: fixed; inset: 0; z-index: 2147483000; background: #0b0d10;
+  }
+  /* Preview-only toolbar: above the overlay (2147483000) so it stays usable. */
+  #sst-toolbar {
+    position: fixed; right: 12px; bottom: 12px; z-index: 2147483100;
+    display: flex; gap: 8px; align-items: center;
+    font: 12px/1.4 ui-monospace, Consolas, monospace; color: #9aa3ad;
+  }
+  #sst-toolbar button, #sst-toolbar select {
+    font: inherit; color: #e8eaed; background: #16181c;
+    border: 1px solid #2a2e34; border-radius: 6px; padding: 5px 10px; cursor: pointer;
+  }
+  #sst-toolbar button:hover { border-color: #4f8cff; }
+</style>
+</head>
+<body>
+  <p style="color:#9aa3ad;font:14px/1.6 system-ui,sans-serif;padding:24px;">
+    The page behind the startup screen. Reload to replay; the overlay covers
+    this on load, exactly as it would in DeepSeek Harness.
+  </p>
+  <div id="sst-toolbar">
+    <label for="sst-screen">screen:</label>
+    <select id="sst-screen">
+      <option value="wordmark">wordmark</option>
+      <option value="boot-log">boot-log</option>
+      <option value="steps">steps</option>
+    </select>
+    <button id="sst-replay" type="button">replay</button>
+  </div>
+
+  <!-- What the Host's tapIndex writes into the real page starts here. -->
+  <div id="startup-screen-template-root" class="sst-boot"></div>
+  <script>
+    ;(function () {
+      'use strict'
+      var NS = 'startup-screen-template'
+      window.__STARTUP_SCREEN_TEMPLATE__ = {
+        enabled: true,
+        mode: 'always',            // 'always' so replay is never gated in preview
+        screen: 'wordmark',
+        title: 'AGENT HARNESS',
+        subtitle: 'STARTING UP',
+        accent: '#4f8cff',
+        durationMs: 2600,
+        allowSkip: true
+      }
+      // Same bootstrap guard + 9s watchdog the Host injects inline.
+      var c = window.__STARTUP_SCREEN_TEMPLATE__
+      var root = document.getElementById(NS + '-root')
+      var off = c.enabled === false
+      if (!off && c.mode === 'session' && sessionStorage.getItem(NS + ':shown') === '1') off = true
+      if (!off && c.mode === 'daily' && localStorage.getItem(NS + ':day') === new Date().toISOString().slice(0, 10)) off = true
+      if (off) {
+        window.__STARTUP_SCREEN_TEMPLATE_SKIP__ = true
+        if (root && root.parentNode) root.parentNode.removeChild(root)
+      } else {
+        document.documentElement.classList.add('sst-lock')
+        setTimeout(function () {
+          try {
+            if (window.__STARTUP_SCREEN_TEMPLATE_RUNNING__ === true) return
+            var r = document.getElementById(NS + '-root')
+            if (r && r.parentNode) r.parentNode.removeChild(r)
+            document.documentElement.classList.remove('sst-lock')
+            if (document.body) document.body.style.overflow = ''
+          } catch (e) { /* the page must survive the guard too */ }
+        }, 9000)
+      }
+
+      // Preview-only controls: pick a screen, then replay through the API.
+      var select = document.getElementById('sst-screen')
+      var pending = null
+      select.addEventListener('change', function () { pending = select.value })
+      document.getElementById('sst-replay').addEventListener('click', function () {
+        var api = window.__STARTUP_SCREEN_TEMPLATE_API__
+        if (pending) window.__STARTUP_SCREEN_TEMPLATE__.screen = pending
+        if (api && typeof api.replay === 'function') api.replay()
+        else window.location.reload()
+      })
+    })()
+  </script>
+  <script defer src="../lib/screens.js"></script>
+  <script defer src="../lib/widget.js"></script>
+  <!-- …and ends here. Keep this block in sync with lib/index.js. -->
+</body>
+</html>

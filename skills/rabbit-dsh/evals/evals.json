@@ -1,170 +1,216 @@
 {
-  "skills": [
-    "rabbit-dsh"
-  ],
-  "notes": "Scenarios score observed tool calls and resulting artifacts, not scaffold creation alone. Record a run's model, pass state, doc reads, and retries under 'results' only after a supervised run. Efficiency targets let a shorter skill be compared against a longer one. The 2025-11 gemini results were recorded against the previous expectations, which rewarded scaffold creation, so they were retired with those expectations.",
-  "scoring": {
-    "artifact": "Assert on the tool's structured return or the resulting file. A success claim in the final response proves nothing. Check the artifact outside the transcript.",
-    "efficiency": "Record doc reads and retries per run. A retry is a repeated call after a clean failure or a wrong artifact. Fewer reads and retries means the skill made the task easier to complete.",
-    "negative_case": "Every scenario includes a skip or failure case so 'always scaffold' or 'always load' cannot pass."
+ "skills": [
+  "rabbit-dsh"
+ ],
+ "notes": "Scenarios score observed tool calls and resulting artifacts, not scaffold creation alone. Record a run's model, pass state, doc reads, and retries under 'results' only after a supervised run. Efficiency targets let a shorter skill be compared against a longer one. The 2025-11 gemini results were recorded against the previous expectations, which rewarded scaffold creation, so they were retired with those expectations.",
+ "scoring": {
+  "artifact": "Assert on the tool's structured return or the resulting file. A success claim in the final response proves nothing. Check the artifact outside the transcript.",
+  "efficiency": "Record doc reads and retries per run. A retry is a repeated call after a clean failure or a wrong artifact. Fewer reads and retries means the skill made the task easier to complete.",
+  "negative_case": "Every scenario includes a skip or failure case so 'always scaffold' or 'always load' cannot pass."
+ },
+ "evals": [
+  {
+   "id": "scaffold-dsh-skill",
+   "query": "Scaffold a new DeepSeek Harness skill for analyzing database schemas with tests and scripts.",
+   "files": [
+    "SKILL.md",
+    "scripts/rabbit_dsh.py",
+    "examples/verification.md"
+   ],
+   "expected_behavior": [
+    "Triggers rabbit-dsh and scaffolds with `scaffold skill`, using a kebab-case name and a trigger-oriented description.",
+    "Generates quoted frontmatter strings so a colon-containing description stays valid YAML.",
+    "Runs `audit` on the scaffold and reports that PASS covers static structure only, with discovery and invocation as follow-up checks. See examples/verification.md.",
+    "Artifact asserts: frontmatter parses with quoted name and description, scripts/helper.py and references/guide.md exist, and no skill.json is created because DSH discovery reads frontmatter."
+   ],
+   "efficiency": {
+    "doc_reads_target": 0,
+    "retries_target": 0
+   },
+   "results": []
   },
-  "evals": [
-    {
-      "id": "scaffold-dsh-skill",
-      "query": "Scaffold a new DeepSeek Harness skill for analyzing database schemas with tests and scripts.",
-      "files": [
-        "SKILL.md",
-        "scripts/rabbit_dsh.py",
-        "examples/verification.md"
-      ],
-      "expected_behavior": [
-        "Triggers rabbit-dsh and scaffolds with `scaffold skill`, using a kebab-case name and a trigger-oriented description.",
-        "Generates quoted frontmatter strings so a colon-containing description stays valid YAML.",
-        "Runs `audit` on the scaffold and reports that PASS covers static structure only, with discovery and invocation as follow-up checks. See examples/verification.md.",
-        "Artifact asserts: frontmatter parses with quoted name and description, scripts/helper.py and references/guide.md exist, and no skill.json is created because DSH discovery reads frontmatter."
-      ],
-      "efficiency": {
-        "doc_reads_target": 0,
-        "retries_target": 0
-      },
-      "results": []
-    },
-    {
-      "id": "scaffold-cordis-plugin",
-      "query": "Help me build a cordis plugin for deepseek harness that provides a code search tool.",
-      "files": [
-        "SKILL.md",
-        "references/plugin-cordis.md",
-        "scripts/rabbit_dsh.py"
-      ],
-      "expected_behavior": [
-        "Recognizes 'cordis plugin for deepseek harness' as a DSH plugin request and triggers rabbit-dsh.",
-        "Scaffolds with `scaffold plugin` and verifies syntax with `node --check` for JavaScript or `npm run build` for TypeScript before claiming the starter works.",
-        "Runs `audit` and reports build, load, call, and unload as separate follow-up checks, stating which ones ran. See examples/verification.md.",
-        "Artifact asserts: package.json is ESM with an existing main entry, the JavaScript entry has no TypeScript annotations, and cordis.patch.yml puts quoted id and name rows under `insert`."
-      ],
-      "efficiency": {
-        "doc_reads_target": 1,
-        "retries_target": 0
-      },
-      "results": []
-    },
-    {
-      "id": "offline-docs-lookup",
-      "query": "How does DeepSeek Harness handle Ralph iterative loops and workflow scripts? I am offline and need local docs.",
-      "files": [
-        "SKILL.md",
-        "references/workflow-ralph.md",
-        "references/official-reference-guide.md"
-      ],
-      "expected_behavior": [
-        "Searches with `docs search ... --source official` and reads the winning path and section instead of quoting a community page as an API contract.",
-        "Explains the difference between `tool-workflow` (orchestrating subagents via JS) and `ralph` (immutable goal with fresh agent rounds).",
-        "Cites the offline source path and section heading for each contract claim."
-      ],
-      "efficiency": {
-        "doc_reads_target": 2,
-        "retries_target": 0
-      },
-      "results": []
-    },
-    {
-      "id": "mcp-server-config",
-      "query": "Add a GitHub MCP server to my DeepSeek Harness web profile patch configuration.",
-      "files": [
-        "SKILL.md",
-        "references/mcp-integration.md",
-        "scripts/rabbit_dsh.py"
-      ],
-      "expected_behavior": [
-        "For an active profile, uses the native flow: the shipped `cordis-plugin-development` skill's MCP bundle template, installed through Plugin Manager.",
-        "If it demonstrates the CLI, writes only to a new managed scratch patch and reports that native patches, includes, expressions, and unrelated rows stay untouched.",
-        "Explains the tool prefix convention (`mcp__github__<toolName>`) and verifies one tool through it when a DSH runtime is available."
-      ],
-      "efficiency": {
-        "doc_reads_target": 1,
-        "retries_target": 0
-      },
-      "results": []
-    },
-    {
-      "id": "example-review-sql-migration",
-      "query": "Review the migration in ./work/001_orders_customer.sql for unsafe changes before we deploy.",
-      "files": [
-        "examples/review-sql-migration/SKILL.md",
-        "examples/verification.md"
-      ],
-      "setup": "Copy examples/review-sql-migration into a temporary workspace and root the session there. Run the paraphrase, skip, slash, and nested-directory sub-cases as separate sessions.",
-      "expected_behavior": [
-        "Paraphrase case: 'Check this migration for a missing index before we ship it.' loads the skill.",
-        "Skip case: a generic SQL question such as 'What does ADD COLUMN do in SQLite?' does not load the skill.",
-        "Slash case: `/review-sql-migration` injects the skill once, and the turn does not load it a second time.",
-        "Nested-directory case: from `fixtures/`, the linked reference references/sqlite.md resolves from the loaded skill's resource directory.",
-        "Artifact asserts: the review cites fixtures/001_orders_customer.sql:2 and reports that orders.customer_id lacks an index with customer_id as its leading column."
-      ],
-      "efficiency": {
-        "doc_reads_target": 0,
-        "retries_target": 1
-      },
-      "results": []
-    },
-    {
-      "id": "example-schema-find-refs",
-      "query": "Load the schema-find-refs bundle into an isolated profile and call schema_find_refs on the orders table.",
-      "files": [
-        "examples/schema-find-refs/index.js",
-        "examples/verification.md"
-      ],
-      "setup": "Point DSH_HOME at a temp home, init it, and install examples/schema-find-refs. Run the call, rejection, and unload sub-cases in that profile.",
-      "expected_behavior": [
-        "Loads the bundle in an isolated profile without touching any active profile.",
-        "Artifact asserts for {\"table\": \"orders\"}: references cover schema.sql lines 5, 6, 7, 8, and 10, truncated is false, and the rendered text lists fixtures/schema.sql:<line> rows.",
-        "Artifact asserts for {\"table\": \"orders\", \"limit\": 2}: two references, truncated is true.",
-        "Rejected input: {\"table\": \"orders; DROP TABLE\"} and {\"table\": \"orders\", \"limit\": 0} fail cleanly with the validation message, and the plugin stays loaded.",
-        "Unload: after removing the bundle, schema_find_refs no longer appears in the tool registry."
-      ],
-      "efficiency": {
-        "doc_reads_target": 0,
-        "retries_target": 1
-      },
-      "results": []
-    },
-    {
-      "id": "trigger-paraphrase-skill-authoring",
-      "query": "I want to package a specialized rubric and tests for our database migrations so my DeepSeek coding agent can run it autonomously.",
-      "files": [
-        "SKILL.md",
-        "references/quick-reference.md",
-        "examples/review-sql-migration/SKILL.md"
-      ],
-      "expected_behavior": [
-        "Triggers rabbit-dsh from the intent without typing 'rabbit-dsh'.",
-        "Routes to skill authoring rather than a generic plugin or workflow.",
-        "Recommends starting with the SQL migration review example or scaffolding with `rabbit_dsh.py scaffold skill`."
-      ],
-      "efficiency": {
-        "doc_reads_target": 0,
-        "retries_target": 0
-      },
-      "results": []
-    },
-    {
-      "id": "trigger-paraphrase-ralph-loop",
-      "query": "How do I configure my DSH agent to iteratively fix broken tests in a loop until they all pass?",
-      "files": [
-        "SKILL.md",
-        "references/workflow-ralph.md"
-      ],
-      "expected_behavior": [
-        "Triggers rabbit-dsh from the DSH iterative loop intent.",
-        "Routes to Ralph workflows and multi-agent orchestration.",
-        "Explains the difference between bounded loops in workflow scripts and interactive session turns."
-      ],
-      "efficiency": {
-        "doc_reads_target": 1,
-        "retries_target": 0
-      },
-      "results": []
-    }
-  ]
+  {
+   "id": "scaffold-cordis-plugin",
+   "query": "Help me build a cordis plugin for deepseek harness that provides a code search tool.",
+   "files": [
+    "SKILL.md",
+    "references/plugin-cordis.md",
+    "scripts/rabbit_dsh.py"
+   ],
+   "expected_behavior": [
+    "Recognizes 'cordis plugin for deepseek harness' as a DSH plugin request and triggers rabbit-dsh.",
+    "Scaffolds with `scaffold plugin` and verifies syntax with `node --check` for JavaScript or `npm run build` for TypeScript before claiming the starter works.",
+    "Runs `audit` and reports build, load, call, and unload as separate follow-up checks, stating which ones ran. See examples/verification.md.",
+    "Artifact asserts: package.json is ESM with an existing main entry, the JavaScript entry has no TypeScript annotations, and cordis.patch.yml puts quoted id and name rows under `insert`."
+   ],
+   "efficiency": {
+    "doc_reads_target": 1,
+    "retries_target": 0
+   },
+   "results": []
+  },
+  {
+   "id": "offline-docs-lookup",
+   "query": "How does DeepSeek Harness handle Ralph iterative loops and workflow scripts? I am offline and need local docs.",
+   "files": [
+    "SKILL.md",
+    "references/workflow-ralph.md",
+    "references/official-reference-guide.md"
+   ],
+   "expected_behavior": [
+    "Searches with `docs search ... --source official` and reads the winning path and section instead of quoting a community page as an API contract.",
+    "Explains the difference between `tool-workflow` (orchestrating subagents via JS) and `ralph` (immutable goal with fresh agent rounds).",
+    "Cites the offline source path and section heading for each contract claim."
+   ],
+   "efficiency": {
+    "doc_reads_target": 2,
+    "retries_target": 0
+   },
+   "results": []
+  },
+  {
+   "id": "mcp-server-config",
+   "query": "Add a GitHub MCP server to my DeepSeek Harness web profile patch configuration.",
+   "files": [
+    "SKILL.md",
+    "references/mcp-integration.md",
+    "scripts/rabbit_dsh.py"
+   ],
+   "expected_behavior": [
+    "For an active profile, uses the native flow: the shipped `cordis-plugin-development` skill's MCP bundle template, installed through Plugin Manager.",
+    "If it demonstrates the CLI, writes only to a new managed scratch patch and reports that native patches, includes, expressions, and unrelated rows stay untouched.",
+    "Explains the tool prefix convention (`mcp__github__<toolName>`) and verifies one tool through it when a DSH runtime is available."
+   ],
+   "efficiency": {
+    "doc_reads_target": 1,
+    "retries_target": 0
+   },
+   "results": []
+  },
+  {
+   "id": "example-review-sql-migration",
+   "query": "Review the migration in ./work/001_orders_customer.sql for unsafe changes before we deploy.",
+   "files": [
+    "examples/review-sql-migration/SKILL.md",
+    "examples/verification.md"
+   ],
+   "setup": "Copy examples/review-sql-migration into a temporary workspace and root the session there. Run the paraphrase, skip, slash, and nested-directory sub-cases as separate sessions.",
+   "expected_behavior": [
+    "Paraphrase case: 'Check this migration for a missing index before we ship it.' loads the skill.",
+    "Skip case: a generic SQL question such as 'What does ADD COLUMN do in SQLite?' does not load the skill.",
+    "Slash case: `/review-sql-migration` injects the skill once, and the turn does not load it a second time.",
+    "Nested-directory case: from `fixtures/`, the linked reference references/sqlite.md resolves from the loaded skill's resource directory.",
+    "Artifact asserts: the review cites fixtures/001_orders_customer.sql:2 and reports that orders.customer_id lacks an index with customer_id as its leading column."
+   ],
+   "efficiency": {
+    "doc_reads_target": 0,
+    "retries_target": 1
+   },
+   "results": []
+  },
+  {
+   "id": "example-schema-find-refs",
+   "query": "Load the schema-find-refs bundle into an isolated profile and call schema_find_refs on the orders table.",
+   "files": [
+    "examples/schema-find-refs/index.js",
+    "examples/verification.md"
+   ],
+   "setup": "Point DSH_HOME at a temp home, init it, and install examples/schema-find-refs. Run the call, rejection, and unload sub-cases in that profile.",
+   "expected_behavior": [
+    "Loads the bundle in an isolated profile without touching any active profile.",
+    "Artifact asserts for {\"table\": \"orders\"}: references cover schema.sql lines 5, 6, 7, 8, and 10, truncated is false, and the rendered text lists fixtures/schema.sql:<line> rows.",
+    "Artifact asserts for {\"table\": \"orders\", \"limit\": 2}: two references, truncated is true.",
+    "Rejected input: {\"table\": \"orders; DROP TABLE\"} and {\"table\": \"orders\", \"limit\": 0} fail cleanly with the validation message, and the plugin stays loaded.",
+    "Unload: after removing the bundle, schema_find_refs no longer appears in the tool registry."
+   ],
+   "efficiency": {
+    "doc_reads_target": 0,
+    "retries_target": 1
+   },
+   "results": []
+  },
+  {
+   "id": "trigger-paraphrase-skill-authoring",
+   "query": "I want to package a specialized rubric and tests for our database migrations so my DeepSeek coding agent can run it autonomously.",
+   "files": [
+    "SKILL.md",
+    "references/quick-reference.md",
+    "examples/review-sql-migration/SKILL.md"
+   ],
+   "expected_behavior": [
+    "Triggers rabbit-dsh from the intent without typing 'rabbit-dsh'.",
+    "Routes to skill authoring rather than a generic plugin or workflow.",
+    "Recommends starting with the SQL migration review example or scaffolding with `rabbit_dsh.py scaffold skill`."
+   ],
+   "efficiency": {
+    "doc_reads_target": 0,
+    "retries_target": 0
+   },
+   "results": []
+  },
+  {
+   "id": "trigger-paraphrase-ralph-loop",
+   "query": "How do I configure my DSH agent to iteratively fix broken tests in a loop until they all pass?",
+   "files": [
+    "SKILL.md",
+    "references/workflow-ralph.md"
+   ],
+   "expected_behavior": [
+    "Triggers rabbit-dsh from the DSH iterative loop intent.",
+    "Routes to Ralph workflows and multi-agent orchestration.",
+    "Explains the difference between bounded loops in workflow scripts and interactive session turns."
+   ],
+   "efficiency": {
+    "doc_reads_target": 1,
+    "retries_target": 0
+   },
+   "results": []
+  },
+  {
+   "id": "example-startup-screen",
+   "query": "Add a startup screen to my DSH web profile that shows a boot log while the app loads.",
+   "files": [
+    "SKILL.md",
+    "examples/startup-screen/README.md",
+    "examples/startup-screen/lib/index.js",
+    "examples/startup-screen/lib/screens.js",
+    "examples/verification.md"
+   ],
+   "setup": "Root the session in a checkout of this skill. The agent may run a disposable DSH profile (DSH_HOME under a temp dir), but a full runtime is not required: the preview page must prove the widget.",
+   "expected_behavior": [
+    "Installs from examples/startup-screen (path install or copy) instead of rewriting a plugin from scratch.",
+    "Picks the boot-log screen via config (POST startup-screen-template/config patch or the settings panel) rather than editing screen code.",
+    "Confirms the widget in preview/index.html first: the boot-log screen plays and releases the page within durationMs plus fade.",
+    "States which verification checks ran (build, load, call, unload) and which did not when no DSH runtime is available. See examples/verification.md.",
+    "Does not break the watchdog contract: any screen edit still calls done exactly once and the 9-second bootstrap watchdog stays in place."
+   ],
+   "efficiency": {
+    "doc_reads_target": 1,
+    "retries_target": 1
+   },
+   "results": []
+  },
+  {
+   "id": "example-context-dashboard",
+   "query": "Add a context dashboard plugin for DeepSeek Harness showing token composition and context events as a tab in the chat.",
+   "files": [
+    "SKILL.md",
+    "examples/context-dashboard/README.md",
+    "examples/context-dashboard/lib/client.js",
+    "examples/verification.md"
+   ],
+   "expected_behavior": [
+    "Recognizes the request as a DSH Web UI plugin and triggers rabbit-dsh, routing to the context dashboard template.",
+    "Starts from examples/context-dashboard rather than scaffolding from scratch, keeping the dual Host + Client export shape and the ModuleLoader client bundle identity rule (client id equals the package name).",
+    "Keeps the dataset shape contract (session, stats, composition, trend, events, files, commands, agents) and keeps data.source set to 'demo' unless a real data source is wired.",
+    "Artifact asserts: node --check passes for lib/index.js, lib/client.js, and lib/demo-data.js, cordis.patch.yml keeps the quoted id and name rows under insert, and the static preview opens standalone.",
+    "Negative case: a request for a plain chat widget or sidebar tab routes to those templates instead and does not mount the dashboard."
+   ],
+   "efficiency": {
+    "doc_reads_target": 1,
+    "retries_target": 0
+   },
+   "results": []
+  }
+ ]
 }

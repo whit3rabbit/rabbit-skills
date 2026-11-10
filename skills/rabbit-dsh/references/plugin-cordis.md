@@ -6,7 +6,7 @@ Use a plugin when DSH needs a runtime capability. Check the installed compositio
 
 - **Host tool.** Register a model-callable tool through `ctx.tools` and `defineTool`. Declare `inject = ['tools']` so the plugin mounts when that service is available.
 - **Service.** Add a Cordis service when multiple plugins need a shared API. Keep consumer code separate from the provider so the implementation can be replaced.
-- **Client extension.** Discover the relevant Client slot or page before writing UI code. Use the native `cordis-plugin-development` skill's decoration template.
+- **Client extension.** Discover the relevant Client slot or page before writing UI code. See the [UI, sidebar, and settings reference](ui-sidebar.md) and start from the copyable [sidebar UI template](../examples/sidebar/README.md) for `ctx.betterSidebar`, native `ctx.sidebarRightTabs`, session header utilities, settings sections, and reusable UI components.
 - **Configuration bundle.** Ship `dsh.bundle.patch` when the change only enables or configures existing plugin rows. A configuration-only bundle needs a package manifest and patch, with no Host entry.
 
 Use the installed composition's inspection tools to find the exact service and event signatures. Offline, use [extension points](docs/official/pinned/extensions.md), [tool authoring](docs/official/reference/cookbook/adding-a-tool.md), and [bundle packaging](docs/official/develop/basic/publish.md).

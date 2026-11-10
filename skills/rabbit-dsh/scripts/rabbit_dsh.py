@@ -76,6 +76,8 @@ CONCEPT_MAP = [
      ["features/commands.md"]),
     ("subagents", "Subagents and parallel fan-out",
      ["features/subagent.md"]),
+    ("ui", "Web UI, right sidebar tabs, slots, and settings cards: sidebarRightTabs, slots, settings.section",
+     ["official/reference/subsystems/sidebar-right.md", "official/reference/subsystems/slots.md", "official/reference/subsystems/settings.md", "official/reference/cookbook/adding-a-settings-card.md"]),
     ("telemetry", "Telemetry switches and privacy hardening",
      ["official/reference/subsystems/session-telemetry.md"]),
 ]

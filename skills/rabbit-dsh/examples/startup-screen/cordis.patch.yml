@@ -1,0 +1,14 @@
+# startup-screen-template — DSH bundle patch
+#
+# Mounts the plugin's Host half into the active profile's configuration tree.
+# The Web half is not declared here: the host assembles the client bundle from
+# the `dsh.client` block in package.json.
+#
+# Install without editing a profile patch by hand:
+#   dsh plugin --profile web add startup-screen-template
+# Local development install (path form):
+#   dsh plugin --profile web add link:./skills/rabbit-dsh/examples/startup-screen
+- insert:
+    - id: startup-screen-template
+      name: startup-screen-template
+      disabled: !!js (process.env.DSH_DISABLE_STARTUP_SCREEN_TEMPLATE === '1')

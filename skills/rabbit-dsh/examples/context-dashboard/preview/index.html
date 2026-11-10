@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+  context-dashboard-template — static look preview
+
+  Renders the dashboard's target look with the demo fixture inlined, so the
+  layout can be reviewed in any browser without a DSH runtime:
+
+      open skills/rabbit-dsh/examples/context-dashboard/preview/index.html
+
+  This page is a SNAPSHOT, not the live bundle: the real plugin renders these
+  cards from lib/client.js against the Host data routes. Keep this page in
+  sync only when you change the card layout or the demo figures.
+============================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context Dashboard — static preview</title>
+<style>
+  body{margin:0;background:#101216;color:#e6e9ef;font:13px/1.5 -apple-system,'Segoe UI',sans-serif}
+  .ctxd-root{--ctxd-c-system:#64748b;--ctxd-c-schemas:#0ea5e9;--ctxd-c-user:#22c55e;--ctxd-c-injected:#f59e0b;--ctxd-c-skills:#a855f7;--ctxd-c-reasoning:#ec4899;--ctxd-c-answers:#3b82f6;--ctxd-c-results:#f97316;
+    max-width:860px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:14px}
+  .banner{border:1px dashed #3a4150;border-radius:8px;padding:7px 10px;font-size:12px;color:#aab3c5}
+  .head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .title{font-size:15px;font-weight:700}
+  .sub{font-size:12px;color:#8a93a6}
+  .card{border:1px solid #2a3140;background:#161a22;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+  .cardTitle{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#aab3c5}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+  .kpi{border:1px solid #2a3140;border-radius:8px;padding:8px 10px;background:#1a1f29}
+  .kpiValue{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+  .kpiLabel{font-size:11px;color:#8a93a6}
+  .bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#1a1f29}
+  .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:4px 14px}
+  .legendRow{display:flex;align-items:center;gap:7px;font-size:12px}
+  .swatch{width:9px;height:9px;border-radius:3px;flex:none}
+  .legendTokens{margin-left:auto;color:#8a93a6;font-variant-numeric:tabular-nums}
+  .trend{display:flex;align-items:flex-end;gap:3px;height:90px;padding:4px 2px;border-bottom:1px solid #2a3140}
+  .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-width:6px}
+  .steps{display:flex;gap:3px;padding-top:4px}
+  .step{flex:1;min-width:6px;font-size:10px;color:#8a93a6;text-align:center}
+  .rows{display:flex;flex-direction:column;gap:2px}
+  .row{display:flex;align-items:center;gap:10px;padding:5px 6px;border-radius:6px;font-size:12px}
+  .row:hover{background:#1a1f29}
+  .rowMain{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rowMeta{margin-left:auto;color:#8a93a6;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pos{color:#4ade80}.neg{color:#f87171}
+  .agents{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+  .agent{border:1px solid #2a3140;border-radius:8px;padding:9px 11px;display:flex;flex-direction:column;gap:6px;background:#1a1f29}
+  .agentTitle{display:flex;align-items:center;gap:7px;font-weight:600;font-size:12px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .run{background:#4ade80}.done{background:#8a93a6}
+  .track{height:6px;border-radius:3px;background:#232a37;overflow:hidden}
+  .fill{height:100%;border-radius:3px;background:var(--ctxd-c-answers)}
+  .agentMeta{font-size:11px;color:#8a93a6;display:flex;gap:8px;flex-wrap:wrap}
+  footer{font-size:11px;color:#667089;max-width:860px;margin:8px auto 0;padding:0 16px 24px}
+</style>
+</head>
+<body>
+<div class="ctxd-root">
+  <div class="banner">Static look preview — the live plugin renders these cards from the client bundle against the Host data routes.</div>
+
+  <div class="head">
+    <span class="title">Context</span>
+    <span class="sub">Refactor the ingest pipeline · deepseek-v4 · 87.8k / 128.0k window</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="kpiValue">68.6%</div><div class="kpiLabel">Occupancy</div></div>
+    <div class="kpi"><div class="kpiValue">14</div><div class="kpiLabel">Turns</div></div>
+    <div class="kpi"><div class="kpiValue">37</div><div class="kpiLabel">Steps</div></div>
+    <div class="kpi"><div class="kpiValue">52</div><div class="kpiLabel">Tool calls</div></div>
+    <div class="kpi"><div class="kpiValue">25m 12s</div><div class="kpiLabel">Active time</div></div>
+    <div class="kpi"><div class="kpiValue">$0.83</div><div class="kpiLabel">Est. cost</div></div>
+    <div class="kpi"><div class="kpiValue">71.0%</div><div class="kpiLabel">Cache hit</div></div>
+  </div>
+
+  <div class="card">
+    <div class="cardTitle">Current composition</div>
+    <div class="bar">
+      <div class="swatch" style="width:4.8%;height:100%;border-radius:0;background:var(--ctxd-c-system)" title="System prompt · 4.2k (4.8%)"></div>
+      <div class="swatch" style="width:11.2%;height:100%;border-radius:0;background:var(--ctxd-c-schemas)" title="Tool schemas · 9.8k (11.2%)"></div>
+      <div class="swatch" style="width:3.5%;height:100%;border-radius:0;background:var(--ctxd-c-user)" title="User messages · 3.1k (3.5%)"></div>
+      <div class="swatch" style="width:1.4%;height:100%;border-radius:0;background:var(--ctxd-c-injected)" title="Injected context · 1.2k (1.4%)"></div>
+      <div class="swatch" style="width:5.8%;height:100%;border-radius:0;background:var(--ctxd-c-skills)" title="Skill injections · 5.1k (5.8%)"></div>
+      <div class="swatch" style="width:9.5%;height:100%;border-radius:0;background:var(--ctxd-c-reasoning)" title="Reasoning · 8.3k (9.5%)"></div>
+      <div class="swatch" style="width:3.3%;height:100%;border-radius:0;background:var(--ctxd-c-answers)" title="Answers · 2.9k (3.3%)"></div>
+      <div class="swatch" style="width:13.0%;height:100%;border-radius:0;background:var(--ctxd-c-results)" title="Tool results · 11.4k (13.0%)"></div>
+      <div style="flex:1;height:100%;background:repeating-linear-gradient(45deg,#1a1f29 0 4px,#141821 4px 8px)" title="Free window + compaction reserve"></div>
+    </div>
+    <div class="legend">
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-system)"></span><span>System prompt</span><span class="legendTokens">4.2k · 4.8%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-schemas)"></span><span>Tool schemas</span><span class="legendTokens">9.8k · 11.2%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-user)"></span><span>User messages</span><span class="legendTokens">3.1k · 3.5%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-injected)"></span><span>Injected context</span><span class="legendTokens">1.2k · 1.4%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-skills)"></span><span>Skill injections</span><span class="legendTokens">5.1k · 5.8%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-reasoning)"></span><span>Reasoning</span><span class="legendTokens">8.3k · 9.5%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-answers)"></span><span>Answers</span><span class="legendTokens">2.9k · 3.3%</span></div>
+      <div class="legendRow"><span class="swatch" style="background:var(--ctxd-c-results)"></span><span>Tool results</span><span class="legendTokens">11.4k · 13.0%</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cardTitle">Context trend</div>
+    <div class="trend">
+      <div class="col" title="#1 Read the repo map · 17.4k"><div style="height:6%;background:var(--ctxd-c-reasoning)"></div><div style="height:3%;background:var(--ctxd-c-answers)"></div><div style="height:21%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#2 Locate the ingest entry point · 21.8k"><div style="height:6%;background:var(--ctxd-c-reasoning)"></div><div style="height:6%;background:var(--ctxd-c-answers)"></div><div style="height:41%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#3 Open pipeline.ts · 24.8k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:18%;background:var(--ctxd-c-reasoning)"></div><div style="height:8%;background:var(--ctxd-c-answers)"></div><div style="height:67%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#4 Trace the writer path · 28.5k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:27%;background:var(--ctxd-c-reasoning)"></div><div style="height:10%;background:var(--ctxd-c-answers)"></div><div style="height:92%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#5 Plan the refactor · 32.1k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:58%;background:var(--ctxd-c-skills)"></div><div style="height:44%;background:var(--ctxd-c-reasoning)"></div><div style="height:18%;background:var(--ctxd-c-answers)"></div><div style="height:100%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#6 Edit pipeline.ts · 37.7k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:58%;background:var(--ctxd-c-skills)"></div><div style="height:60%;background:var(--ctxd-c-reasoning)"></div><div style="height:24%;background:var(--ctxd-c-answers)"></div><div style="height:100%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#7 Run the test suite · 48.0k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:58%;background:var(--ctxd-c-skills)"></div><div style="height:81%;background:var(--ctxd-c-reasoning)"></div><div style="height:30%;background:var(--ctxd-c-answers)"></div><div style="height:100%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#8 Fix two regressions · 55.5k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:58%;background:var(--ctxd-c-skills)"></div><div style="height:100%;background:var(--ctxd-c-reasoning)"></div><div style="height:38%;background:var(--ctxd-c-answers)"></div><div style="height:100%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#9 Compact + summarize · 39.1k (compaction reclaimed 11.6k)"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:58%;background:var(--ctxd-c-skills)"></div><div style="height:71%;background:var(--ctxd-c-reasoning)"></div><div style="height:27%;background:var(--ctxd-c-answers)"></div><div style="height:83%;background:var(--ctxd-c-results)"></div></div>
+      <div class="col" title="#10 Re-verify and report · 46.0k"><div style="height:14%;background:var(--ctxd-c-injected)"></div><div style="height:58%;background:var(--ctxd-c-skills)"></div><div style="height:94%;background:var(--ctxd-c-reasoning)"></div><div style="height:33%;background:var(--ctxd-c-answers)"></div><div style="height:100%;background:var(--ctxd-c-results)"></div></div>
+    </div>
+    <div class="steps">
+      <div class="step">#1</div><div class="step">#2</div><div class="step">#3</div><div class="step">#4</div><div class="step">#5</div>
+      <div class="step">#6</div><div class="step">#7</div><div class="step">#8</div><div class="step">#9 ✂</div><div class="step">#10</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cardTitle">Context events</div>
+    <div class="rows">
+      <div class="row"><span>AGENTS.md (project instructions)</span><span class="rowMeta"><span class="pos">+1.2k tok</span> · turn 3 · step 3 · 10:04:12</span></div>
+      <div class="row"><span>skill: rabbit-dsh</span><span class="rowMeta"><span class="pos">+5.1k tok</span> · turn 5 · step 5 · 10:07:40</span></div>
+      <div class="row"><span>harness auto-prune</span><span class="rowMeta"><span class="neg">−900 tok</span> · turn 6 · step 6 · 10:09:55</span></div>
+      <div class="row"><span>auto-compaction</span><span class="rowMeta"><span class="neg">−11.6k tok</span> · turn 9 · step 9 · 10:15:02</span></div>
+      <div class="row"><span>model switch</span><span class="rowMeta"><span class="pos">+0 tok</span> · turn 10 · step 10 · 10:16:18</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cardTitle">File activity</div>
+    <div class="rows">
+      <div class="row"><span class="rowMain">src/ingest/pipeline.ts</span><span class="rowMeta">R 4 · W 2 · S 1 · +64/−31</span></div>
+      <div class="row"><span class="rowMain">src/ingest/writer.ts</span><span class="rowMeta">R 2 · W 1 · S 0 · +18/−6</span></div>
+      <div class="row"><span class="rowMain">test/ingest/pipeline.test.ts</span><span class="rowMeta">R 1 · W 1 · S 0 · +42</span></div>
+      <div class="row"><span class="rowMain">AGENTS.md</span><span class="rowMeta">R 1 · W 0 · S 0</span></div>
+      <div class="row"><span class="rowMain">src/ingest/config.ts</span><span class="rowMeta">R 3 · W 0 · S 2</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cardTitle">Command executions</div>
+    <div class="rows">
+      <div class="row"><span class="swatch" style="background:var(--ctxd-c-schemas)"></span><span class="rowMain">node</span><span class="rowMeta">9 runs · 41.2s · 1 failed</span></div>
+      <div class="row"><span class="swatch" style="background:var(--ctxd-c-schemas);opacity:.78"></span><span class="rowMain">git</span><span class="rowMeta">6 runs · 3.1s</span></div>
+      <div class="row"><span class="swatch" style="background:var(--ctxd-c-schemas);opacity:.56"></span><span class="rowMain">rg</span><span class="rowMeta">5 runs · 0.9s</span></div>
+      <div class="row"><span class="swatch" style="background:var(--ctxd-c-schemas);opacity:.51"></span><span class="rowMain">pytest</span><span class="rowMeta">3 runs · 22.8s · 1 failed</span></div>
+    </div>
+  </div>
+
+  <div class="head"><span class="title">Fleet</span><span class="sub">4 agents · 2 running</span></div>
+  <div class="agents">
+    <div class="agent"><div class="agentTitle"><span class="dot run"></span><span>Refactor lead</span><span class="rowMeta">self</span></div><div class="track"><div class="fill" style="width:36%"></div></div><div class="agentMeta"><span>46.0k tok · 36.0%</span><span>37 steps · 25m 12s</span></div></div>
+    <div class="agent"><div class="agentTitle"><span class="dot done"></span><span>Repo explorer</span><span class="rowMeta">subagent</span></div><div class="track"><div class="fill" style="width:14%"></div></div><div class="agentMeta"><span>18.2k tok · 14.2%</span><span>6 steps · 1m 36s</span><span>↑ lead</span></div></div>
+    <div class="agent"><div class="agentTitle"><span class="dot done"></span><span>Test runner</span><span class="rowMeta">subagent</span></div><div class="track"><div class="fill" style="width:9%"></div></div><div class="agentMeta"><span>11.4k tok · 8.9%</span><span>4 steps · 1m 1s</span><span>↑ lead</span></div></div>
+    <div class="agent"><div class="agentTitle"><span class="dot run"></span><span>Changelog writer</span><span class="rowMeta">subagent</span></div><div class="track"><div class="fill" style="width:7%"></div></div><div class="agentMeta"><span>8.9k tok · 7.0%</span><span>2 steps · 24.0s</span><span>↑ lead</span></div></div>
+  </div>
+</div>
+<footer>
+  context-dashboard-template · static preview of the DeepSeek Harness context dashboard skeleton · modeled on the dsh-context plugin architecture
+</footer>
+</body>
+</html>

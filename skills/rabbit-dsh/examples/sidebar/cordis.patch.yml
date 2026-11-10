@@ -1,0 +1,4 @@
+- insert:
+    - id: sidebar-template
+      name: '@rabbit-dsh/sidebar-template'
+      disabled: !!js (process.env.DSH_DISABLE_SIDEBAR_TEMPLATE === '1')

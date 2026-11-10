@@ -65,11 +65,12 @@ One home per fact. Each skill under `skills/<name>/` is completely self-containe
   - `references/quick-reference.md`: Cheat sheet for DSH skills, config commands, and precedence.
   - `references/workflow-ralph.md`: Multi-agent orchestration workflows and Ralph iterative goal loops.
   - `references/plugin-cordis.md`: Cordis microkernel plugin architecture, services, and tool registration.
+  - `references/ui-sidebar.md`: Web UI components, right-sidebar tabs, `dsh-better-sidebar` extension APIs, settings pages, host UI primitives, and skin token rules.
   - `references/mcp-integration.md`: Model Context Protocol configuration, stdio/SSE transports, and tool prefixing.
   - `references/docs/`: 176 clean, offline-ready Markdown documents (98 official docs from deepseek-harness.github.io, including pinned extensions and testing notes, and 78 community docs from deepseekdocs.com).
   - `references/official-reference-guide.md`: Offline reference index routing authoring tasks to official docs and pinned notes.
-  - `examples/`: Two worked examples (`review-sql-migration` skill, `schema-find-refs` Host tool bundle) plus `verification.md` discovery, invocation, and build/load/call/unload walkthroughs.
-  - `evals/`: 8 evaluation scenarios (including trigger-paraphrase cases) scoring observed tool calls and artifacts, with doc-read and retry efficiency targets.
+  - `examples/`: Six worked examples (`review-sql-migration` skill, `schema-find-refs` Host tool bundle, `sidebar/` Web UI, sidebar tab, file viewer, settings page, and UI kit template, `widget/` floating overlay widget template with vanilla-JS injection over Host routes, `startup-screen/` startup screen template with pre-mount boot layer, watchdog, three swappable screens, and a settings-page client bundle, and `context-dashboard/` token composition, trend, events, file activity, and agent fleet surfaces) plus `verification.md` discovery, invocation, and build/load/call/unload walkthroughs.
+  - `evals/`: 10 evaluation scenarios (including trigger-paraphrase cases) scoring observed tool calls and artifacts, with doc-read and retry efficiency targets.
 
 ## Invariants & Rules for Agents
 

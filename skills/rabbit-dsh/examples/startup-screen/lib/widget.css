@@ -1,0 +1,146 @@
+/* startup-screen-template — widget styles.
+   Colors come from the --sst-accent variable the runtime sets from config;
+   nothing here is hardcoded to a brand. */
+
+/* The overlay replaces the boot layer (.sst-boot) once widget.js runs. */
+.sst-overlay {
+  position: fixed;
+  inset: 0;
+  /* Just under the 32-bit max so nothing renders above a locked splash. */
+  z-index: 2147483000;
+  background: #0b0d10;
+  color: #e8eaed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 240ms ease;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* Fade-out class the runtime adds in finish(). */
+.sst-overlay.sst-out {
+  opacity: 0;
+}
+
+/* The boot layer: present before widget.js mounts, removed by the watchdog
+   (after 9s) or replaced by the overlay. Layout rules come from the critical
+   CSS the Host injects inline; only the look lives here. */
+
+.sst-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(520px, 84vw);
+}
+
+.sst-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sst-subtitle {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--sst-accent);
+  text-transform: uppercase;
+}
+
+/* Screen 1: progress bar */
+.sst-progress {
+  width: 220px;
+  height: 2px;
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.sst-progress-fill {
+  width: 0;
+  height: 100%;
+  background: var(--sst-accent);
+}
+
+/* Screen 2: boot log */
+.sst-mono {
+  align-items: flex-start;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.sst-log {
+  margin: 0;
+  padding: 0;
+  min-height: calc(5 * 1.7em);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a8b0ba;
+  white-space: pre-wrap;
+}
+
+.sst-log-cursor {
+  font-size: 13px;
+  color: var(--sst-accent);
+  animation: sst-blink 1s steps(1) infinite;
+}
+
+@keyframes sst-blink {
+  50% { opacity: 0; }
+}
+
+/* Screen 3: status steps */
+.sst-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.sst-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #6b7280;
+  transition: color 200ms ease;
+}
+
+.sst-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  flex: none;
+}
+
+.sst-step[data-state='active'] {
+  color: #e8eaed;
+}
+
+.sst-step[data-state='active'] .sst-dot {
+  background: var(--sst-accent);
+  border-color: var(--sst-accent);
+}
+
+.sst-step[data-state='ok'] {
+  color: #9aa3ad;
+}
+
+.sst-step[data-state='ok'] .sst-dot {
+  background: transparent;
+  border-color: var(--sst-accent);
+}
+
+/* Scroll lock helper (also injected inline as critical CSS by the Host). */
+html.sst-lock,
+html.sst-lock body {
+  overflow: hidden !important;
+}
